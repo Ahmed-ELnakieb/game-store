@@ -73,6 +73,9 @@
                     <div class="col-sm-6">
                         <p class="mb-0 text-center text-sm-start">{{ $footer['single']['copyright_text_one'] ?? ' ' }} <a class="highlight" href="{{ route('page', '/') }}">{{ basicControl()->site_title }}</a> {{ $footer['single']['copyright_text_two'] ?? ' ' }}</p>
                     </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0 text-center text-sm-end">Designed & Developed by <a class="highlight" href="https://elnakieb.online" target="_blank">Elnakieb</a></p>
+                    </div>
                 </div>
             </div>
         </div>

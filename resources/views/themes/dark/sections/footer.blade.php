@@ -81,6 +81,11 @@
                     </div>
                 </div>
             </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <p class="mb-0">Designed & Developed by <a class="highlight" href="https://elnakieb.online" target="_blank">Elnakieb</a></p>
+                </div>
+            </div>
         </div>
     </section>
 @endif
