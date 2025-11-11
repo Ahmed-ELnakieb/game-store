@@ -166,11 +166,14 @@ class PageDetailSeeder extends Seeder
     'page_id' => 8,
     'language_id' => 1,
     'name' => 'Contact',
-    'content' => '<div class="custom-block" contenteditable="false"><div class="custom-block-content">[[dark_contact]]</div>
+    'content' => '<div class="custom-block" contenteditable="false"><div class="custom-block-content">[[dark_contact_channels]]</div>
+                    <span class="delete-block">×</span>
+                    <span class="up-block">↑</span>
+                    <span class="down-block">↓</span></div><p><br></p><div class="custom-block" contenteditable="false"><div class="custom-block-content">[[dark_contact]]</div>
                     <span class="delete-block">×</span>
                     <span class="up-block">↑</span>
                     <span class="down-block">↓</span></div><p><br></p>',
-    'sections' => '["dark_contact"]',
+    'sections' => '["dark_contact_channels","dark_contact"]',
     'created_at' => '2024-12-12 12:38:21',
     'updated_at' => '2024-12-15 08:27:40',
   ),

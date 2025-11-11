@@ -1,10 +1,6 @@
 @if(isset($dark_contact))
     <section class="contact-section">
         <div class="container">
-            <div class="text-center mb-50">
-                <h2>{{ @$dark_contact['single']['title'] }}</h2>
-                <p class="mt-10 mb-0">{{ @$dark_contact['single']['sub_title'] }}</p>
-            </div>
             <div class="contact-area mb-50">
                 <div class="contact-item-list">
                     <div class="row g-4 justify-content-center">
