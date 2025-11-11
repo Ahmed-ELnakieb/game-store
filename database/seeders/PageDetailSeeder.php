@@ -176,7 +176,7 @@ class PageDetailSeeder extends Seeder
     'id' => 10,
     'page_id' => 9,
     'language_id' => 1,
-    'name' => 'Card',
+    'name' => 'Hacks',
     'content' => NULL,
     'sections' => NULL,
     'created_at' => '2024-12-12 12:53:41',

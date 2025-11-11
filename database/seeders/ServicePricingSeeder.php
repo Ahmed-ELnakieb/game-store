@@ -145,5 +145,76 @@ class ServicePricingSeeder extends Seeder
         }
 
         $this->command->info("\n✓ Service pricing seeded successfully!");
+
+        // Seed Gift Card Pricing
+        $this->command->info("\nSeeding gift card pricing...");
+
+        $giftCardPricing = [
+            'Free Fire Hack' => [
+                'ESP Only' => 3,
+                'Aimbot + ESP' => 5,
+                'Full Edition' => 8,
+            ],
+            'Genshin Impact Hack' => [
+                'Basic Edition' => 4,
+                'Advanced Edition' => 7,
+                'Full Edition' => 10,
+            ],
+            'Valorant Hack' => [
+                'ESP Only' => 5,
+                'Aimbot + ESP' => 8,
+                'Full Edition' => 12,
+            ],
+        ];
+
+        foreach ($giftCardPricing as $cardName => $services) {
+            $card = \App\Models\Card::where('name', $cardName)->first();
+            
+            if (!$card) {
+                continue;
+            }
+
+            $this->command->info("\nAdding pricing for: {$cardName}");
+
+            foreach ($services as $serviceName => $price) {
+                $service = \App\Models\CardService::where('card_id', $card->id)
+                    ->where('name', $serviceName)
+                    ->first();
+
+                if (!$service) {
+                    continue;
+                }
+
+                // Get Lifetime duration
+                $duration = \App\Models\ServiceDuration::where('name', 'Lifetime')->first();
+                
+                if (!$duration) {
+                    $duration = \App\Models\ServiceDuration::create([
+                        'name' => 'Lifetime',
+                        'days' => 0,
+                        'code' => 'lifetime',
+                        'status' => 1,
+                        'sort_order' => 99,
+                    ]);
+                }
+
+                \App\Models\ServicePricing::updateOrCreate(
+                    [
+                        'card_service_id' => $service->id,
+                        'duration_id' => $duration->id,
+                    ],
+                    [
+                        'price' => $price,
+                        'discount' => 0,
+                        'discount_type' => 'flat',
+                        'status' => 1,
+                    ]
+                );
+
+                $this->command->info("  ✓ {$serviceName}: \${$price}");
+            }
+        }
+
+        $this->command->info("\n✓ Gift card pricing seeded successfully!");
     }
 }
