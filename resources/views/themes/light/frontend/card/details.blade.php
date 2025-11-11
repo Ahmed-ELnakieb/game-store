@@ -42,6 +42,14 @@
                                                         @endif
                                                     </div>
                                                 </div>
+
+                                                @if($service->description)
+                                                    <div class="hack-features mt-3 mb-3">
+                                                        <div class="features-content">
+                                                            {!! nl2br(e($service->description)) !!}
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 
                                                 @if($service->activePricings->count() > 0)
                                                     <div class="duration-options mt-3">

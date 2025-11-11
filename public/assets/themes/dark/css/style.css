@@ -7898,3 +7898,22 @@ Docs end
     color: var(--primary-color);
 }
 
+
+
+/* Hack Features Section */
+.hack-features {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid var(--primary-color, #6366f1);
+    padding: 15px 20px;
+    border-radius: 8px;
+}
+
+.hack-features .features-content {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.hack-features .features-content strong {
+    color: rgba(255, 255, 255, 0.95);
+}

@@ -8968,3 +8968,22 @@ li {
     height: 150px;
     margin: 40px;
 }
+
+
+/* Hack Features Section */
+.hack-features {
+    background: rgba(99, 102, 241, 0.05);
+    border-left: 3px solid var(--primary-color, #6366f1);
+    padding: 15px 20px;
+    border-radius: 8px;
+}
+
+.hack-features .features-content {
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.hack-features .features-content strong {
+    color: #1f2937;
+}
