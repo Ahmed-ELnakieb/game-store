@@ -21,7 +21,7 @@
                                             </div>
                                             <h1 class="title">@lang(@$item['title'])</h1>
                                             <p class="description">@lang(@$item['description'])</p>
-                                            <a href="" class="kew-btn mt-20">
+                                            <a href="{{ @$item['button_link'] ?? '#' }}" class="kew-btn mt-20">
                                                 <span class="kew-text">{{ @$item['kew-text'] }}</span>
                                                 <div class="kew-arrow">
                                                     <div class="kt-one"><i class="fa-regular fa-arrow-right-long"></i></div>

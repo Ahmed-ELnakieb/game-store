@@ -121,13 +121,13 @@
                                                         </div>
                                                     @endif
 
-                                                    @if($type == "url" && $language->default_status == 1)
+                                                    @if($type == "url")
                                                         <div class="col-md-12 mb-3">
                                                             <label class="form-label"
                                                                    for="@lang($name)">@lang(stringToTitle($name))</label>
                                                             <input type="@lang($type)" id="@lang($name)"
                                                                    name="{{ $name }}[{{ $language->id }}]"
-                                                                   value="{{ old($name.'.'.$language->id, isset($multipleContentData[$language->id]) ? @$multipleContentData[$language->id][0]->content->media->{$name} : '') }}"
+                                                                   value="{{ old($name.'.'.$language->id, isset($multipleContentData[$language->id]) ? @$multipleContentData[$language->id][0]->description->{$name} : '') }}"
                                                                    class="form-control @error($name.'.'.$language->id) is-invalid @enderror"
                                                                    placeholder="@lang(stringToTitle($name))">
                                                             @error($name.'.'.$language->id)

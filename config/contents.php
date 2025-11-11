@@ -17,6 +17,7 @@ return [
                 'sub_title' => 'text',
                 'description' => 'text',
                 'kew-text' => 'text',
+                'button_link' => 'text',
                 'box_type' => 'text',
                 'background_image' => 'file',
             ],
@@ -25,6 +26,7 @@ return [
                 'sub_sub_title.*' => 'required|max:200',
                 'description.*' => 'required|max:500',
                 'kew-text.*' => 'required|max:300',
+                'button_link.*' => 'nullable|max:200',
                 'background_image.*' => 'nullable|max:10240|image|mimes:jpg,jpeg,png,webp,svg',
             ],
         ],
@@ -669,7 +671,6 @@ return [
         'thumb_image' => 'file',
         'background_image' => 'file',
         'my_link' => 'url',
-        'button_link' => 'url',
         'icon' => 'icon',
         'count_number' => 'number',
         'start_date' => 'date'

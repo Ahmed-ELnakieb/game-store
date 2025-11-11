@@ -116,7 +116,7 @@
                                                         </div>
                                                     @endif
 
-                                                    @if($type == "url" && $language->default_status == 1)
+                                                    @if($type == "url")
                                                         <div class="col-md-12 mb-3">
                                                             <label class="form-label"
                                                                    for="@lang($name)">@lang(stringToTitle($name))</label>

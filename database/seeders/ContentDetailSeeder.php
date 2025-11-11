@@ -172,18 +172,18 @@ class ContentDetailSeeder extends Seeder
     'id' => 18,
     'content_id' => 18,
     'language_id' => 1,
-    'description' => '{"title":"Warrior\'s Path Resurrection","sub_title":"25% Off Get Unlimited Offer","description":"Exchange skins get new once with best conditions","kew-text":"Grab the offer","box_type":"dark-moderate-blue-box"}',
-    'created_at' => '2024-12-09 08:34:35',
-    'updated_at' => '2024-12-09 08:42:42',
+    'description' => '{"title":"PUBG Mobile Hacks 2025","sub_title":"50% Off Premium Aimbot & ESP","description":"Dominate the battlegrounds with our undetected PUBG Mobile hacks. Aimbot, wallhack, and ESP included!","kew-text":"Get PUBG Hacks","button_link":"/cards","box_type":"dark-moderate-blue-box"}',
+    'created_at' => '2025-02-10 10:00:00',
+    'updated_at' => '2025-02-10 14:30:00',
   ),
   18 => 
   array (
     'id' => 19,
     'content_id' => 19,
     'language_id' => 1,
-    'description' => '{"title":"Dragon Quest Remake EN United States","sub_title":"25% Off Get Unlimited Offer","description":"Exchange skins get new once with best conditions","kew-text":"Grab the offer","box_type":"very-light-blue-box"}',
-    'created_at' => '2024-12-09 08:35:36',
-    'updated_at' => '2024-12-09 08:43:00',
+    'description' => '{"title":"Call of Duty Mobile Aimbot","sub_title":"Instant Delivery - Undetected 2025","description":"Master every match with precision aimbot, ESP, and wallhack. Compatible with all COD Mobile versions!","kew-text":"Buy COD Hacks","button_link":"/cards","box_type":"very-light-blue-box"}',
+    'created_at' => '2025-02-10 10:15:00',
+    'updated_at' => '2025-02-10 14:25:00',
   ),
   19 => 
   array (
