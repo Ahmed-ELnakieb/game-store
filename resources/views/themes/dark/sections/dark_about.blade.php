@@ -10,7 +10,7 @@
                 <div class="text-box">
                     <h2 class="mb-20">{{ @$dark_about['single']['title'] }}</h2>
                     {!! $dark_about['single']['description'] !!}
-                    <a href="{{ $dark_about['single']['media']->button_link }}" class="kew-btn mt-30">
+                    <a href="{{ @$dark_about['single']['button_link'] ?? '#' }}" class="kew-btn mt-30">
                         <span class="kew-text">{{ $dark_about['single']['button'] }}</span>
                         <div class="kew-arrow">
                             <div class="kt-one"><i class="fa-regular fa-arrow-right-long"></i></div>

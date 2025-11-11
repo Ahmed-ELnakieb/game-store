@@ -13,7 +13,7 @@
                     <div class="text-box">
                         <h2 class="mb-20">@lang($light_about['single']['title'])</h2>
                         {!! $light_about['single']['description'] !!}
-                        <a href="{{ $light_about['single']['media']->button_link }}" class="cmn-btn mt-20">@lang($light_about['single']['button'])<i class="fa-regular fa-arrow-right-long"></i></a>
+                        <a href="{{ @$light_about['single']['button_link'] ?? '#' }}" class="cmn-btn mt-20">@lang($light_about['single']['button'])<i class="fa-regular fa-arrow-right-long"></i></a>
                     </div>
                 </div>
             </div>

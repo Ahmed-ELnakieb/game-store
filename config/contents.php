@@ -41,14 +41,14 @@ return [
                 'title' => 'text',
                 'description' => 'textarea',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
                 'image' => 'file',
             ],
             'validation' => [
                 'title.*' => 'required|max:100',
                 'description.*' => 'required|max:10050',
                 'button.*' => 'required|max:100',
-                'button_link.*' => 'required|max:100',
+                'button_link.*' => 'required|max:200',
                 'image.*' => 'nullable|max:10240|image|mimes:jpg,jpeg,png,webp,svg',
             ]
         ],
@@ -63,13 +63,13 @@ return [
                 'title' => 'text',
                 'sub_title' => 'text',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
             ],
             'validation' => [
                 'title.*' => 'required|max:100',
                 'sub_title.*' => 'required|max:200',
                 'button.*' => 'required|max:100',
-                'button_link.*' => 'required|max:100',
+                'button_link.*' => 'required|max:200',
 
             ]
         ],
@@ -104,13 +104,13 @@ return [
                 'title' => 'text',
                 'sub_title' => 'text',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
             ],
             'validation' => [
                 'title.*' => 'required|max:100',
                 'sub_title.*' => 'required|max:100',
                 'button.*' => 'required|max:100',
-                'button_link.*' => 'required|max:100',
+                'button_link.*' => 'required|max:200',
             ]
         ],
         'preview' =>[
@@ -151,12 +151,12 @@ return [
             'field_name' => [
                 'title' => 'text',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
             ],
             'validation' => [
                 'title.*' => 'required|max:100',
                 'button.*' => 'required|max:100',
-                'button_link.*' => 'required|max:100',
+                'button_link.*' => 'required|max:300',
             ]
         ],
         'multiple' => [
@@ -185,12 +185,12 @@ return [
             'field_name' => [
                 'title' => 'text',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
             ],
             'validation' => [
                 'title.*' => 'required|max:100',
                 'button.*' => 'required|max:100',
-                'button_link.*' => 'required|max:100',
+                'button_link.*' => 'required|max:200',
             ]
         ],
         'preview' =>[
@@ -234,13 +234,13 @@ return [
                 'title' => 'text',
                 'sub_title' => 'text',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
             ],
             'validation' => [
                 'title.*' => 'required|max:100',
                 'sub_title.*' => 'required|max:200',
                 'button.*' => 'required|max:100',
-                'button_link.*' => 'required|max:500',
+                'button_link.*' => 'required|max:200',
             ]
         ],
         'preview' => [
@@ -256,7 +256,7 @@ return [
                 'sub_title' => 'text',
                 'description' => 'text',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
                 'image' => 'file',
                 'image_two' => 'file',
                 'image_three' => 'file',
@@ -282,12 +282,12 @@ return [
             'field_name' => [
                 'title' => 'text',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
             ],
             'validation' => [
                 'title.*' => 'required|max:100',
                 'button.*' => 'required|max:100',
-                'button_link.*' => 'required|max:100',
+                'button_link.*' => 'required|max:200',
             ]
         ],
         'preview' =>[
@@ -335,7 +335,7 @@ return [
                 'title' => 'text',
                 'sub_title' => 'text',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
                 'image' => 'file',
             ],
             'validation' => [
@@ -369,13 +369,13 @@ return [
                 'title' => 'text',
                 'sub_title' => 'text',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
             ],
             'validation' => [
                 'title.*' => 'required|max:100',
                 'sub_title.*' => 'required|max:100',
                 'button.*' => 'required|max:100',
-                'button_link.*' => 'required|max:100',
+                'button_link.*' => 'required|max:200',
             ]
         ],
         'preview' =>[
@@ -409,14 +409,14 @@ return [
                 'title' => 'text',
                 'description' => 'textarea',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
                 'image' => 'file',
             ],
             'validation' => [
                 'title.*' => 'required|max:100',
                 'description.*' => 'required|max:10050',
                 'button.*' => 'required|max:100',
-                'button_link.*' => 'required|max:100',
+                'button_link.*' => 'required|max:200',
                 'image.*' => 'nullable|max:10240|image|mimes:jpg,jpeg,png,webp,svg',
             ]
         ],
@@ -447,13 +447,13 @@ return [
                 'title' => 'text',
                 'sub_title' => 'text',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
             ],
             'validation' => [
                 'title.*' => 'required|max:100',
                 'sub_title.*' => 'required|max:200',
                 'button.*' => 'required|max:100',
-                'button_link.*' => 'required|max:100',
+                'button_link.*' => 'required|max:200',
 
             ]
         ],
@@ -513,13 +513,13 @@ return [
                 'title' => 'text',
                 'sub_title' => 'text',
                 'button' => 'text',
-                'button_link' => 'url',
+                'button_link' => 'text',
             ],
             'validation' => [
                 'title.*' => 'required|max:100',
                 'sub_title.*' => 'required|max:200',
                 'button.*' => 'required|max:100',
-                'button_link.*' => 'required|max:500',
+                'button_link.*' => 'required|max:200',
             ]
         ],
         'preview' =>[
