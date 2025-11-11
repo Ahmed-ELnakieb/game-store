@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('order_details', function (Blueprint $table) {
             $table->id();
+            $table->integer('parent_id')->nullable();
             $table->foreignId('user_id')->nullable()->index();
             $table->foreignId('order_id')->index();
             $table->morphs('detailable');

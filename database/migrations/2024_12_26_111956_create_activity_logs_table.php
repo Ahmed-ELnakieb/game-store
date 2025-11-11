@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('sell_post_id');
+            $table->text('activityable_id')->nullable();
+            $table->text('activityable_type')->nullable();
+            $table->string('title', 191);
+            $table->longText('description');
             $table->timestamps();
         });
     }

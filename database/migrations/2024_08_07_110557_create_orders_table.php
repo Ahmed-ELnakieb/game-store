@@ -17,8 +17,12 @@ return new class extends Migration {
             $table->double('amount')->default(0.00)->comment("total order amount");
             $table->text('info')->nullable()->comment("for dynamic information store");
             $table->boolean('payment_status')->default(0)->comment("0=>incomplete,1=>complete");
+            $table->float('discount')->nullable();
+            $table->string('coupon_code', 20)->nullable();
+            $table->integer('coupon_id')->nullable();
             $table->tinyInteger('status')->default(0)->comment("0=>initiate,1=>complete,2=>refund");
             $table->enum('order_for', ['topup', 'card']);
+            $table->enum('order_interface', ['WEB', 'API'])->nullable();
             $table->string('utr')->nullable();
             $table->timestamps();
         });

@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('custom_link')->nullable();
             $table->string('page_title')->nullable();
             $table->string('meta_title')->nullable();
-            $table->string('meta_keywords')->nullable();
+            $table->text('meta_keywords')->nullable();
             $table->text('meta_description')->nullable();
+            $table->text('og_description')->nullable();
+            $table->text('meta_robots')->nullable();
             $table->string('meta_image')->nullable();
             $table->string('meta_image_driver', 50)->nullable();
             $table->string('breadcrumb_image')->nullable();

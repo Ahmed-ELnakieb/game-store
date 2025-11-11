@@ -13,8 +13,7 @@ return new class extends Migration {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->text('image')->nullable();
-            $table->string('driver')->nullable();
+            $table->string('icon')->nullable();
             $table->enum('type', ['top_up', 'card', 'game'])->default('card');
             $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
             $table->integer('sort_by')->default(1);

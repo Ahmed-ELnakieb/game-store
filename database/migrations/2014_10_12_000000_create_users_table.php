@@ -44,6 +44,13 @@ return new class extends Migration {
             $table->dateTime('last_seen')->nullable();
             $table->string('time_zone')->nullable();
             $table->string('password');
+            $table->text('github_id')->nullable();
+            $table->text('google_id')->nullable();
+            $table->text('facebook_id')->nullable();
+            $table->string('public_key')->nullable();
+            $table->string('secret_key')->nullable();
+            $table->string('active_dashboard', 50)->nullable();
+            $table->string('update_password_token')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->string('timezone')->nullable();

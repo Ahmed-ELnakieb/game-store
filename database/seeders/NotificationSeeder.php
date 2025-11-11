@@ -2,43 +2,560 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class NotificationSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $notification_templates = array(
-            array('id' => '1', 'language_id' => '1', 'name' => 'Password Reset', 'email_from' => 'talk@gmail.com', 'template_key' => 'PASSWORD_RESET', 'subject' => 'Reset Your Password', 'short_keys' => '{"message":"message"}', 'email' => 'You are receiving this email because we received a password reset request for your account.[[message]]
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('notification_templates')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        $data = array (
+  0 => 
+  array (
+    'id' => 1,
+    'language_id' => 1,
+    'name' => 'Password Reset',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'PASSWORD_RESET',
+    'subject' => 'Reset Your Password',
+    'short_keys' => '{"message":"message"}',
+    'email' => 'You are receiving this email because we received a password reset request for your account.[[message]]
 
 
 This password reset link will expire in 60 minutes.
 
-If you did not request a password reset, no further action is required.', 'sms' => '', 'in_app' => '', 'push' => '', 'status' => '{"mail":"1","sms":"0","in_app":"0","push":"0"}', 'notify_for' => '0', 'lang_code' => 'en', 'created_at' => '2023-10-08 04:18:47', 'updated_at' => '2024-05-04 15:21:00'),
-            array('id' => '2', 'language_id' => '1', 'name' => 'Verification Code', 'email_from' => 'talk@gmail.com', 'template_key' => 'VERIFICATION_CODE', 'subject' => 'Verification Code', 'short_keys' => '{"code":"code"}', 'email' => 'Your Email verification Code  [[code]]', 'sms' => 'Your SMS verification Code  [[code]]', 'in_app' => '', 'push' => '', 'status' => '{"mail":"1","sms":"1","in_app":"0","push":"0"}', 'notify_for' => '0', 'lang_code' => 'en', 'created_at' => '2023-10-08 04:18:47', 'updated_at' => '2024-05-04 15:21:00'),
-            array('id' => '3', 'language_id' => '1', 'name' => 'Two Step Enabled.', 'email_from' => 'talk@gmail.com', 'template_key' => 'TWO_STEP_ENABLED', 'subject' => 'Two step enabled.', 'short_keys' => '{"action":"Enabled Or Disable","ip":"Device Ip","time":"Time","code":"code"}', 'email' => 'Your verification code is: {{code}}', 'sms' => 'Your verification code is: {{code}}', 'in_app' => 'Your verification code is: {{code}}', 'push' => 'Your verification code is: {{code}}', 'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}', 'notify_for' => '0', 'lang_code' => 'en', 'created_at' => '2023-10-08 04:18:47', 'updated_at' => '2024-05-04 15:21:00'),
-            array('id' => '4', 'language_id' => '1', 'name' => 'Two Step Disabled', 'email_from' => 'talk@gmail.com', 'template_key' => 'TWO_STEP_DISABLED', 'subject' => 'Two Step disabled', 'short_keys' => '{"time":"Time"}', 'email' => 'Google two factor verification is disabled.', 'sms' => 'Google two factor verification is disabled.', 'in_app' => 'Google two factor verification is disabled.', 'push' => 'Google two factor verification is disabled.', 'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}', 'notify_for' => '0', 'lang_code' => 'en', 'created_at' => '2023-10-08 04:18:47', 'updated_at' => '2024-05-04 15:21:00'),
-            array('id' => '5', 'language_id' => '1', 'name' => 'Support Ticket Create', 'email_from' => 'talk@gmail.com', 'template_key' => 'SUPPORT_TICKET_CREATE', 'subject' => 'Support Ticket New', 'short_keys' => '{"ticket_id":"Support Ticket ID","username":"username"}', 'email' => '[[username]] create a ticket
-Ticket : [[ticket_id]]', 'sms' => '[[username]] create a ticket
-Ticket : [[ticket_id]]', 'in_app' => '[[username]] create a ticket
-Ticket : [[ticket_id]]', 'push' => '[[username]] create a ticket
-Ticket : [[ticket_id]]', 'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}', 'notify_for' => '1', 'lang_code' => 'en', 'created_at' => '2023-10-08 04:18:47', 'updated_at' => '2024-05-04 15:21:00'),
-            array('id' => '6', 'language_id' => '1', 'name' => 'Admin Replied Ticket', 'email_from' => 'talk@gmail.com', 'template_key' => 'ADMIN_REPLIED_TICKET', 'subject' => 'Support Ticket Reply', 'short_keys' => '{"ticket_id":"Support Ticket ID"}', 'email' => 'Your support ticket has been replied by admin
-Ticket : [[ticket_id]]', 'sms' => 'Your support ticket has been replied by admin
-Ticket : [[ticket_id]]', 'in_app' => 'Your support ticket has been replied by admin
-Ticket : [[ticket_id]]', 'push' => 'Your support ticket has been replied by admin
-Ticket : [[ticket_id]]', 'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}', 'notify_for' => '0', 'lang_code' => 'en', 'created_at' => '2023-10-08 04:18:47', 'updated_at' => '2024-05-04 15:21:00'),
+If you did not request a password reset, no further action is required.',
+    'sms' => '',
+    'in_app' => '',
+    'push' => '',
+    'status' => '{"mail":"1","sms":"0","in_app":"0","push":"0"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  1 => 
+  array (
+    'id' => 2,
+    'language_id' => 1,
+    'name' => 'Verification Code',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'VERIFICATION_CODE',
+    'subject' => 'Verification Code',
+    'short_keys' => '{"code":"code"}',
+    'email' => 'Your Email verification Code  [[code]]',
+    'sms' => 'Your SMS verification Code  [[code]]',
+    'in_app' => '',
+    'push' => '',
+    'status' => '{"mail":"1","sms":"1","in_app":"0","push":"0"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  2 => 
+  array (
+    'id' => 3,
+    'language_id' => 1,
+    'name' => 'Two Step Enabled.',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'TWO_STEP_ENABLED',
+    'subject' => 'Two step enabled.',
+    'short_keys' => '{"action":"Enabled Or Disable","ip":"Device Ip","time":"Time","code":"code"}',
+    'email' => 'Your verification code is: {{code}}',
+    'sms' => 'Your verification code is: {{code}}',
+    'in_app' => 'Your verification code is: {{code}}',
+    'push' => 'Your verification code is: {{code}}',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  3 => 
+  array (
+    'id' => 4,
+    'language_id' => 1,
+    'name' => 'Two Step Disabled',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'TWO_STEP_DISABLED',
+    'subject' => 'Two Step disabled',
+    'short_keys' => '{"time":"Time"}',
+    'email' => 'Google two factor verification is disabled.',
+    'sms' => 'Google two factor verification is disabled.',
+    'in_app' => 'Google two factor verification is disabled.',
+    'push' => 'Google two factor verification is disabled.',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  4 => 
+  array (
+    'id' => 5,
+    'language_id' => 1,
+    'name' => 'Support Ticket Create',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'SUPPORT_TICKET_CREATE',
+    'subject' => 'Support Ticket New',
+    'short_keys' => '{"ticket_id":"Support Ticket ID","username":"username"}',
+    'email' => '[[username]] create a ticket
+Ticket : [[ticket_id]]',
+    'sms' => '[[username]] create a ticket
+Ticket : [[ticket_id]]',
+    'in_app' => '[[username]] create a ticket
+Ticket : [[ticket_id]]',
+    'push' => '[[username]] create a ticket
+Ticket : [[ticket_id]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 1,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  5 => 
+  array (
+    'id' => 6,
+    'language_id' => 1,
+    'name' => 'Admin Replied Ticket',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'ADMIN_REPLIED_TICKET',
+    'subject' => 'Support Ticket Reply',
+    'short_keys' => '{"ticket_id":"Support Ticket ID"}',
+    'email' => 'Your support ticket has been replied by admin
+Ticket : [[ticket_id]]',
+    'sms' => 'Your support ticket has been replied by admin
+Ticket : [[ticket_id]]',
+    'in_app' => 'Your support ticket has been replied by admin
+Ticket : [[ticket_id]]',
+    'push' => 'Your support ticket has been replied by admin
+Ticket : [[ticket_id]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  6 => 
+  array (
+    'id' => 7,
+    'language_id' => 1,
+    'name' => 'Payment Request to Admin',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'PAYMENT_REQUEST',
+    'subject' => 'Payment Request',
+    'short_keys' => '{"username":"User","amount":"Amount","gateway":"Gateway"}',
+    'email' => '[[username]] request to payment [[amount]] by [[gateway]].',
+    'sms' => '[[username]] request to payment [[amount]] by [[gateway]].',
+    'in_app' => '[[username]] request to payment [[amount]] by [[gateway]].',
+    'push' => '[[username]] request to payment [[amount]] by [[gateway]].',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 1,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  7 => 
+  array (
+    'id' => 9,
+    'language_id' => 1,
+    'name' => 'Payment Rejected',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'PAYMENT_REJECTED',
+    'subject' => 'Payment Rejected',
+    'short_keys' => '{"username":"User","amount":"Amount","gateway":"Gateway"}',
+    'email' => '[[username]] request to payment [[amount]] by [[gateway]] is rejected.',
+    'sms' => '[[username]] request to payment [[amount]] by [[gateway]] is rejected.',
+    'in_app' => '[[username]] request to payment [[amount]] by [[gateway]] is rejected.',
+    'push' => '[[username]] request to payment [[amount]] by [[gateway]] is rejected.',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  8 => 
+  array (
+    'id' => 10,
+    'language_id' => 1,
+    'name' => 'Buyer Make Payment',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'BUYER_PAYMENT',
+    'subject' => 'Payment Complete',
+    'short_keys' => '{"amount":"Amount","currency":"Currency Symbol","gateway":"Gateway","transaction":"Trx Id"}',
+    'email' => 'Your [[currency]][[amount]] payment Via [[gateway]] has been completed. Trx Id: [[transaction]]',
+    'sms' => 'Your [[currency]][[amount]] payment Via [[gateway]] has been completed. Trx Id: [[transaction]]',
+    'in_app' => 'Your [[currency]][[amount]] payment Via [[gateway]] has been completed. Trx Id: [[transaction]]',
+    'push' => 'Your [[currency]][[amount]] payment Via [[gateway]] has been completed. Trx Id: [[transaction]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  9 => 
+  array (
+    'id' => 11,
+    'language_id' => 1,
+    'name' => 'Buyer Make Payment To Admin',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'BUYER_PAYMENT_ADMIN',
+    'subject' => 'Buyer Make Payment',
+    'short_keys' => '{"username":"username","amount":"Amount","currency":"Currency Symbol","gateway":"Gateway","transaction":"Trx Id"}',
+    'email' => '[[username]] make payment [[currency]][[amount]] Via [[gateway]] has been completed. Trx Id: [[transaction]]',
+    'sms' => '[[username]] make payment [[currency]][[amount]] Via [[gateway]] has been completed. Trx Id: [[transaction]]',
+    'in_app' => '[[username]] make payment [[currency]][[amount]] Via [[gateway]] has been completed. Trx Id: [[transaction]]',
+    'push' => '[[username]] make payment [[currency]][[amount]] Via [[gateway]] has been completed. Trx Id: [[transaction]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 1,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  10 => 
+  array (
+    'id' => 12,
+    'language_id' => 1,
+    'name' => 'Top Up Order Complete',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'TOP_UP_ORDER_COMPLETE',
+    'subject' => 'Top Up Order Complete',
+    'short_keys' => '{"order_id":"Order Id","service_name":"Service Name"}',
+    'email' => 'Your [[service_name]] top up order has been completed. Order Id: [[order_id]]',
+    'sms' => 'Your [[service_name]] top up order has been completed. Order Id: [[order_id]]',
+    'in_app' => 'Your [[service_name]] top up order has been completed. Order Id: [[order_id]]',
+    'push' => 'Your [[service_name]] top up order has been completed. Order Id: [[order_id]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  11 => 
+  array (
+    'id' => 13,
+    'language_id' => 1,
+    'name' => 'Top Up Order Cancel',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'TOP_UP_ORDER_CANCEL',
+    'subject' => 'Top Up Order Cancel',
+    'short_keys' => '{"order_id":"Order Id","service_name":"Service Name"}',
+    'email' => 'Your [[service_name]] top up order has been cancel. Order Id: [[order_id]]',
+    'sms' => 'Your [[service_name]] top up order has been cancel. Order Id: [[order_id]]',
+    'in_app' => 'Your [[service_name]] top up order has been cancel. Order Id: [[order_id]]',
+    'push' => 'Your [[service_name]] top up order has been cancel. Order Id: [[order_id]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  12 => 
+  array (
+    'id' => 14,
+    'language_id' => 1,
+    'name' => 'Card Code Send',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'CARD_CODE_SEND',
+    'subject' => 'Card Code Send',
+    'short_keys' => '{"order_id":"Order Id","service_name":"Service Name"}',
+    'email' => 'Your order [[service_name]] card passcode has been send. Order Id: [[order_id]]',
+    'sms' => 'Your order [[service_name]] card passcode has been send. Order Id: [[order_id]]',
+    'in_app' => 'Your order [[service_name]] card passcode has been send. Order Id: [[order_id]]',
+    'push' => 'Your order [[service_name]] card passcode has been send. Order Id: [[order_id]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  13 => 
+  array (
+    'id' => 15,
+    'language_id' => 1,
+    'name' => 'Card Order Complete',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'CARD_ORDER_COMPLETE',
+    'subject' => 'Card Complete',
+    'short_keys' => '{"order_id":"Order Id"}',
+    'email' => 'Your card order has been completed. Order Id: [[order_id]]',
+    'sms' => 'Your card order has been completed. Order Id: [[order_id]]',
+    'in_app' => 'Your card order has been completed. Order Id: [[order_id]]',
+    'push' => 'Your card order has been completed. Order Id: [[order_id]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  14 => 
+  array (
+    'id' => 16,
+    'language_id' => 1,
+    'name' => 'Card Order Cancel',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'CARD_ORDER_CANCEL',
+    'subject' => 'Card Order Cancel',
+    'short_keys' => '{"order_id":"Order Id"}',
+    'email' => 'Your card order has been cancel. Order Id: [[order_id]]',
+    'sms' => 'Your card order has been cancel. Order Id: [[order_id]]',
+    'in_app' => 'Your card order has been cancel. Order Id: [[order_id]]',
+    'push' => 'Your card order has been cancel. Order Id: [[order_id]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  15 => 
+  array (
+    'id' => 17,
+    'language_id' => 1,
+    'name' => 'Buyer Review',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'BUYER_REVIEW_TO_ADMIN',
+    'subject' => 'You have a new review',
+    'short_keys' => '{"name":"Game Name","rating":"Rating"}',
+    'email' => 'You have new [[rating]] review for [[name]]. ',
+    'sms' => 'You have new [[rating]] review for [[name]]. ',
+    'in_app' => 'You have new [[rating]] review for [[name]]. ',
+    'push' => 'You have new [[rating]] review for [[name]]. ',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 1,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  16 => 
+  array (
+    'id' => 18,
+    'language_id' => 1,
+    'name' => 'Credited Balance',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'ADD_BALANCE',
+    'subject' => 'Your account is credited',
+    'short_keys' => '{"amount":"Amount","main_balance":"Main Balance"}',
+    'email' => 'Your account has been credited [[amount]]. Available balance is [[main_balance]].',
+    'sms' => 'Your account has been credited [[amount]]. Available balance is [[main_balance]].',
+    'in_app' => 'Your account has been credited [[amount]]. Available balance is [[main_balance]].',
+    'push' => 'Your account has been credited [[amount]]. Available balance is [[main_balance]].',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  17 => 
+  array (
+    'id' => 19,
+    'language_id' => 1,
+    'name' => 'Debited Balance',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'DEDUCTED_BALANCE',
+    'subject' => 'Your account is debited ',
+    'short_keys' => '{"amount":"Amount","main_balance":"Main Balance"}',
+    'email' => 'Your account has been debited [[amount]]. Available balance is [[main_balance]].',
+    'sms' => 'Your account has been debited [[amount]]. Available balance is [[main_balance]].',
+    'in_app' => 'Your account has been debited [[amount]]. Available balance is [[main_balance]].',
+    'push' => 'Your account has been debited [[amount]]. Available balance is [[main_balance]].',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  18 => 
+  array (
+    'id' => 20,
+    'language_id' => 1,
+    'name' => 'Payment Lock',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'PAYMENT_LOCK',
+    'subject' => 'Payment Has Been Locked',
+    'short_keys' => '{"title":"Title","amount":"Amount"}',
+    'email' => '[[title]] amount [[amount]] payment has been lock.',
+    'sms' => '[[title]] amount [[amount]] payment has been lock.',
+    'in_app' => '[[title]] amount [[amount]] payment has been lock.',
+    'push' => '[[title]] amount [[amount]] payment has been lock.',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  19 => 
+  array (
+    'id' => 21,
+    'language_id' => 1,
+    'name' => 'SELL RE OFFER',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'SELL_RE_OFFER',
+    'subject' => 'Sell Post Has Been Re Offered',
+    'short_keys' => '{"title":"Title","amount":"Amount","description":"Description","offer_by":"Offer By"}',
+    'email' => 'Your [[title]] sell post has been re offered by [[offer_by]] 
+Amount: [[amount]]
+Description: [[description]]',
+    'sms' => 'Your [[title]] sell post has been re offered by [[offer_by]] 
+Amount: [[amount]]
+Description: [[description]]',
+    'in_app' => 'Your [[title]] sell post has been re offered by [[offer_by]] 
+Amount: [[amount]]
+Description: [[description]]',
+    'push' => 'Your [[title]] sell post has been re offered by [[offer_by]] 
+Amount: [[amount]]
+Description: [[description]]',
+    'status' => '{"mail":1,"sms":1,"in_app":1,"push":1}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  20 => 
+  array (
+    'id' => 22,
+    'language_id' => 1,
+    'name' => 'SELL OFFER',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'SELL_OFFER',
+    'subject' => 'Sell Post Has Been Offered',
+    'short_keys' => '{"title":"Title","amount":"Amount","offer_by":"Offer By"}',
+    'email' => 'Your [[title]] sell post has been offered by [[offer_by]] 
+Amount: [[amount]]',
+    'sms' => 'Your [[title]] sell post has been offered by [[offer_by]] 
+Amount: [[amount]]',
+    'in_app' => 'Your [[title]] sell post has been offered by [[offer_by]] 
+Amount: [[amount]]',
+    'push' => 'Your [[title]] sell post has been offered by [[offer_by]] 
+Amount: [[amount]]',
+    'status' => '{"mail":1,"sms":1,"in_app":1,"push":1}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  21 => 
+  array (
+    'id' => 23,
+    'language_id' => 1,
+    'name' => 'OFFER_ACCEPTED',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'OFFER_ACCEPTED',
+    'subject' => 'Offer Has Been Accepted',
+    'short_keys' => '{"title":"Title","amount":"Amount"}',
+    'email' => '[[title]] offer amount [[amount]] has been accepted.',
+    'sms' => '[[title]] offer amount [[amount]] has been accepted.',
+    'in_app' => '[[title]] offer amount [[amount]] has been accepted.',
+    'push' => '[[title]] offer amount [[amount]] has been accepted.',
+    'status' => '{"mail":1,"sms":1,"in_app":1,"push":1}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  22 => 
+  array (
+    'id' => 24,
+    'language_id' => 1,
+    'name' => 'Payout Request  Admin',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'PAYOUT_REQUEST_TO_ADMIN',
+    'subject' => 'payout Request  Admin',
+    'short_keys' => '{"sender":"Sender Name","amount":"Received Amount","transaction":"Transaction Number", "currency":"Payment Currency"}',
+    'email' => '[[sender]] payout money amount [[amount]] [[currency]] . Transaction: #[[transaction]]',
+    'sms' => '[[sender]] payout money amount [[amount]] [[currency]] . Transaction: #[[transaction]]',
+    'in_app' => '[[sender]] payout money amount [[amount]] [[currency]] . Transaction: #[[transaction]]',
+    'push' => '[[sender]] payout money amount [[amount]] [[currency]] . Transaction: #[[transaction]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 1,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  23 => 
+  array (
+    'id' => 25,
+    'language_id' => 1,
+    'name' => 'Payout Request Cancel',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'PAYOUT_CANCEL',
+    'subject' => 'Payout Request Cancel',
+    'short_keys' => '{"amount":"Received Amount","currency":"Transfer Currency","transaction":"Transaction Number"}',
+    'email' => 'You request for payout amount [[amount]] [[currency]] has been cancel. Transaction: #[[transaction]]',
+    'sms' => 'You request for payout amount [[amount]] [[currency]] has been cancel. Transaction: #[[transaction]]',
+    'in_app' => 'You request for payout amount [[amount]] [[currency]] has been cancel. Transaction: #[[transaction]]',
+    'push' => 'You request for payout amount [[amount]] [[currency]] has been cancel. Transaction: #[[transaction]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  24 => 
+  array (
+    'id' => 26,
+    'language_id' => 1,
+    'name' => 'Password Reset',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'PASSWORD_RESET',
+    'subject' => 'Reset Your Password',
+    'short_keys' => '{"amount":"Received Amount","currency":"Transfer Currency","transaction":"Transaction Number"}',
+    'email' => 'You request for payout amount [[amount]] [[currency]] has been approved . Transaction: #[[transaction]]',
+    'sms' => 'You request for payout amount [[amount]] [[currency]] has been approved . Transaction: #[[transaction]]',
+    'in_app' => 'You request for payout amount [[amount]] [[currency]] has been approved . Transaction: #[[transaction]]',
+    'push' => 'You request for payout amount [[amount]] [[currency]] has been approved . Transaction: #[[transaction]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  25 => 
+  array (
+    'id' => 27,
+    'language_id' => 1,
+    'name' => 'Payout Request from',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'PAYOUT_REQUEST_FROM',
+    'subject' => 'Payout Request from',
+    'short_keys' => '{"amount":"Received Amount","currency":"Transfer Currency","transaction":"Transaction Number"}',
+    'email' => 'You request for payout amount [[amount]] [[currency]] . Transaction: #[[transaction]]',
+    'sms' => 'You request for payout amount [[amount]] [[currency]] . Transaction: #[[transaction]]',
+    'in_app' => 'You request for payout amount [[amount]] [[currency]] . Transaction: #[[transaction]]',
+    'push' => 'You request for payout amount [[amount]] [[currency]] . Transaction: #[[transaction]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+  26 => 
+  array (
+    'id' => 28,
+    'language_id' => 1,
+    'name' => 'Payout Request Approved',
+    'email_from' => 'support@gmail.com',
+    'template_key' => 'PAYOUT_APPROVED',
+    'subject' => 'Payout Request Approved',
+    'short_keys' => '{"amount":"Received Amount","currency":"Transfer Currency","transaction":"Transaction Number"}',
+    'email' => 'You request for payout amount [[amount]] [[currency]] has been approved . Transaction: #[[transaction]]',
+    'sms' => 'You request for payout amount [[amount]] [[currency]] has been approved . Transaction: #[[transaction]]',
+    'in_app' => 'You request for payout amount [[amount]] [[currency]] has been approved . Transaction: #[[transaction]]',
+    'push' => 'You request for payout amount [[amount]] [[currency]] has been approved . Transaction: #[[transaction]]',
+    'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}',
+    'notify_for' => 0,
+    'lang_code' => 'en',
+    'created_at' => '2023-10-08 01:18:47',
+    'updated_at' => '2025-03-01 12:07:13',
+  ),
+);
 
-            array('id' => '7', 'language_id' => '1', 'name' => 'Payment Request to Admin', 'email_from' => 'talk@gmail.com', 'template_key' => 'PAYMENT_REQUEST', 'subject' => 'Payment Request', 'short_keys' => '{"username":"User","amount":"Amount","gateway":"Gateway"}', 'email' => '[[username]] request to payment [[amount]] by [[gateway]].', 'sms' => '[[username]] request to payment [[amount]] by [[gateway]].', 'in_app' => '[[username]] request to payment [[amount]] by [[gateway]].', 'push' => '[[username]] request to payment [[amount]] by [[gateway]].', 'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}', 'notify_for' => '1', 'lang_code' => 'en', 'created_at' => '2023-10-08 04:18:47', 'updated_at' => '2024-05-04 15:21:00'),
-            array('id' => '8', 'language_id' => '1', 'name' => 'Payment Approved', 'email_from' => 'talk@gmail.com', 'template_key' => 'PAYMENT_APPROVED', 'subject' => 'Payment Approved', 'short_keys' => '{"username":"User","amount":"Amount","gateway":"Gateway"}', 'email' => '[[username]] request to payment [[amount]] by [[gateway]] is approved.', 'sms' => '[[username]] request to payment [[amount]] by [[gateway]] is approved.', 'in_app' => '[[username]] request to payment [[amount]] by [[gateway]] is approved.', 'push' => '[[username]] request to payment [[amount]] by [[gateway]] is approved.', 'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}', 'notify_for' => '0', 'lang_code' => 'en', 'created_at' => '2023-10-08 04:18:47', 'updated_at' => '2024-05-04 15:21:00'),
-            array('id' => '9', 'language_id' => '1', 'name' => 'Payment Rejected', 'email_from' => 'talk@gmail.com', 'template_key' => 'PAYMENT_REJECTED', 'subject' => 'Payment Rejected', 'short_keys' => '{"username":"User","amount":"Amount","gateway":"Gateway"}', 'email' => '[[username]] request to payment [[amount]] by [[gateway]] is rejected.', 'sms' => '[[username]] request to payment [[amount]] by [[gateway]] is rejected.', 'in_app' => '[[username]] request to payment [[amount]] by [[gateway]] is rejected.', 'push' => '[[username]] request to payment [[amount]] by [[gateway]] is rejected.', 'status' => '{"mail":"1","sms":"1","in_app":"1","push":"1"}', 'notify_for' => '0', 'lang_code' => 'en', 'created_at' => '2023-10-08 04:18:47', 'updated_at' => '2024-05-04 15:21:00')
-        );
-
-        DB::table('notification_templates')->insert($notification_templates);
+        foreach (array_chunk($data, 50) as $chunk) {
+            DB::table('notification_templates')->insert($chunk);
+        }
     }
 }

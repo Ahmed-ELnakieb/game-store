@@ -20,6 +20,10 @@ return new class extends Migration {
             $table->double('discount')->default(0);
             $table->enum('discount_type', ['flat', 'percentage'])->default('flat');
             $table->boolean('status')->default(1)->comment("0=>off 1=>on");
+            $table->integer('offered_sell')->default(0);
+            $table->integer('max_sell')->default(0);
+            $table->text('old_data')->nullable();
+            $table->text('campaign_data')->nullable();
             $table->boolean('is_offered')->default(0)->comment("0=>no 1=>yes");
             $table->integer('sort_by')->default(1);
             $table->timestamps();

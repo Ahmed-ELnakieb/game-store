@@ -9,6 +9,7 @@ use App\Models\Currency;
 use App\Models\Language;
 use App\Models\ManageMenu;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Mail;
@@ -32,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Schema::defaultStringLength(191);
+        
         try {
             DB::connection()->getPdo();
 

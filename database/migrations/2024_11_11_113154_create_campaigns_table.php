@@ -13,7 +13,8 @@ return new class extends Migration {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->date('date')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->boolean('status')->default(0)->comment("0=>off,1=>on");
             $table->timestamps();
         });

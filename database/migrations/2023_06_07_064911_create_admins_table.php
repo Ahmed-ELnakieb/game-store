@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('image_driver', 20)->nullable();
             $table->string('phone', 191)->nullable();
             $table->text('address')->nullable();
+            $table->integer('role_id')->nullable();
             $table->text('admin_access')->nullable();
             $table->string('last_login', 50)->nullable();
             $table->dateTime('last_seen')->nullable();

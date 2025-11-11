@@ -17,10 +17,22 @@ class DatabaseSeeder extends Seeder
             BasicControlSeeder::class,
             FileStorageSeeder::class,
             GatewaySeeder::class,
+            ManualSmsConfigSeeder::class,
+            PayoutMethodSeeder::class,
             PageSeeder::class,
             LanguageSeeder::class,
             MaintenanceSeeder::class,
             NotificationSeeder::class,
+            NotificationSettingsSeeder::class,
+            BlogCategorySeeder::class,
+            BlogSeeder::class,
+            BlogDetailSeeder::class,
+            CategorySeeder::class,
+            CurrencySeeder::class,
+            ManageMenuSeeder::class,
+            ContentSeeder::class,
+            ContentDetailSeeder::class,
+            PageDetailSeeder::class,
         ]);
     }
 }

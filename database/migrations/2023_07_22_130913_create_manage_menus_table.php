@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('manage_menus', function (Blueprint $table) {
             $table->id();
             $table->string('menu_section');
+            $table->string('theme')->nullable();
             $table->string('menu_items');
             $table->timestamps();
         });

@@ -18,7 +18,9 @@ return new class extends Migration {
             $table->string('region')->nullable();
             $table->text('note')->nullable();
             $table->boolean('status')->default(1);
-            $table->boolean('is_trending')->default(0)->comment("0=>no,1=>yes");
+            $table->integer('total_review')->default(0);
+            $table->float('avg_rating')->default(0);
+            $table->boolean('trending')->default(0);
             $table->boolean('instant_delivery')->default(1);
             $table->text('image')->nullable();
             $table->longText('description')->nullable();
