@@ -45,8 +45,9 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => dirname(__DIR__, 1) . '/assets/upload',
-            'url' => '',
+            'root' => public_path('assets/upload'),
+            'url' => env('APP_URL') . '/assets/upload',
+            'visibility' => 'public',
         ],
 
         'public' => [
