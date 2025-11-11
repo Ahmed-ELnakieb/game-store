@@ -25,7 +25,7 @@ class ManageMenuSeeder extends Seeder
                 'theme' => 'light',
                 'menu_items' => json_encode([
                     'useful_link' => ['blog'],
-                    'support_link' => ['privacy & policy', 'terms & conditions']
+                    'support_link' => ['privacy &amp; policy', 'terms &amp; conditions']
                 ]),
                 'created_at' => '2023-10-16 09:54:10',
                 'updated_at' => '2024-12-18 13:28:56',
@@ -42,7 +42,7 @@ class ManageMenuSeeder extends Seeder
                 'theme' => 'dark',
                 'menu_items' => json_encode([
                     'useful_link' => ['blog', 'contact'],
-                    'support_link' => ['privacy & policy', 'terms & conditions']
+                    'support_link' => ['privacy &amp; policy', 'terms &amp; conditions']
                 ]),
                 'created_at' => '2023-10-16 09:54:10',
                 'updated_at' => '2024-12-14 07:05:51',

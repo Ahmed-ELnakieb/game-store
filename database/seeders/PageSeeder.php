@@ -265,7 +265,7 @@ class PageSeeder extends Seeder
             ],
             [
                 'id' => 14,
-                'name' => 'privacy and policy',
+                'name' => 'privacy &amp; policy',
                 'slug' => 'privacy-and-policy',
                 'template_name' => 'dark',
                 'custom_link' => null,
@@ -288,7 +288,7 @@ class PageSeeder extends Seeder
             ],
             [
                 'id' => 15,
-                'name' => 'terms and conditions',
+                'name' => 'terms &amp; conditions',
                 'slug' => 'terms-and-conditions',
                 'template_name' => 'dark',
                 'custom_link' => null,
