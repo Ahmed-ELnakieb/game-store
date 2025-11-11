@@ -10,42 +10,28 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
+            // Games Category - All game hacks go here
             [
-                'name' => 'Game Hacks',
+                'id' => 1,
+                'name' => 'Games',
                 'icon' => null,
-                'type' => 'game',
+                'type' => 'card',
                 'status' => 1,
                 'sort_by' => 1,
-                'active_children' => 0,
+                'parent_id' => null,
+                'active_children' => 5,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            // Gift Cards Category
             [
-                'name' => 'Gaming',
-                'icon' => null,
-                'type' => 'game',
-                'status' => 1,
-                'sort_by' => 2,
-                'active_children' => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Mobile Top Up',
-                'icon' => null,
-                'type' => 'top_up',
-                'status' => 1,
-                'sort_by' => 3,
-                'active_children' => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
+                'id' => 2,
                 'name' => 'Gift Cards',
                 'icon' => null,
                 'type' => 'card',
                 'status' => 1,
-                'sort_by' => 4,
+                'sort_by' => 2,
+                'parent_id' => null,
                 'active_children' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),

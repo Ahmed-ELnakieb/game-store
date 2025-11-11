@@ -15,16 +15,12 @@ class CardSeeder extends Seeder
     {
         $this->command->info("Seeding game cards...");
         
-        // Get Game Hacks category
-        $category = Category::where('name', 'Game Hacks')->first();
-        
-        if (!$category) {
-            $this->command->error("Game Hacks category not found! Run CategorySeeder first.");
-            return;
-        }
+        // Get the parent Games category - all game cards will be under this
+        $gamesCategory = Category::where('name', 'Games')->first();
 
         $games = [
             [
+                'category_id' => $gamesCategory->id,
                 'name' => 'Honor of Kings (HOK)',
                 'slug' => 'honor-of-kings',
                 'image' => 'game/hok.jpg',
@@ -33,6 +29,7 @@ class CardSeeder extends Seeder
                 'guide' => "Installation Guide:\n\n1. Download the hack file after purchase\n2. Extract the files to your device\n3. Follow the specific installation method:\n\nFor No Root Mode:\n• Install Virtual Space or similar container app\n• Clone the game inside the container\n• Apply the hack through the container\n\nFor Root Mode:\n• Grant root access to the hack app\n• Install the module\n• Reboot your device\n• Launch the game\n\nFor Kernel Mode:\n• Flash the kernel module\n• Configure settings\n• Launch the game\n\nImportant Tips:\n• Always use the latest version\n• Don't use multiple hacks simultaneously\n• Test on a secondary account first\n• Keep the hack hidden during recordings\n• Follow all safety guidelines\n\nFor support, contact us through our support channel.",
             ],
             [
+                'category_id' => $gamesCategory->id,
                 'name' => 'Mobile Legends (MLBB)',
                 'slug' => 'mobile-legends',
                 'image' => 'game/mlbb.jpg',
@@ -41,6 +38,7 @@ class CardSeeder extends Seeder
                 'guide' => "Installation Guide:\n\n1. Purchase and download your chosen hack\n2. Backup your game data (recommended)\n3. Choose your installation method:\n\nNo Root Installation:\n• Download Parallel Space or VirtualXposed\n• Clone Mobile Legends inside\n• Install the hack module\n• Launch the game from the virtual space\n\nRoot Installation:\n• Grant root permissions\n• Install the hack module\n• Configure your preferred settings\n• Launch Mobile Legends\n\nConfiguration Tips:\n• Start with basic features\n• Gradually enable advanced features\n• Adjust ESP settings for visibility\n• Configure skin changer preferences\n• Set up auto-skill combos\n\nSafety Recommendations:\n• Use on secondary accounts initially\n• Don't overuse obvious features\n• Keep hack updated\n• Enable anti-detection features\n• Hide hack during streaming\n\nNeed help? Contact our 24/7 support team.",
             ],
             [
+                'category_id' => $gamesCategory->id,
                 'name' => 'PUBG Mobile',
                 'slug' => 'pubg-mobile',
                 'image' => 'game/pubg.jpg',
@@ -49,6 +47,7 @@ class CardSeeder extends Seeder
                 'guide' => "Installation Guide:\n\n1. Download your purchased hack\n2. Prepare your device:\n\nFor No Root Users:\n• Install a game cloner app (recommended: Parallel Space)\n• Clone PUBG Mobile\n• Install hack in the cloned space\n• Launch from cloner app\n\nFor Root Users:\n• Enable root access\n• Install hack module\n• Grant necessary permissions\n• Configure settings\n• Launch PUBG Mobile\n\nConfiguration Guide:\n• ESP Settings: Adjust colors and distance\n• Aimbot: Set FOV and smoothness\n• No Recoil: Choose weapons to apply\n• Speed Hack: Use safe multipliers (1.5x-2x)\n• Magic Bullet: Set range limits\n\nSafety Guidelines:\n• ALWAYS test on secondary account first\n• Use conservative settings in ranked\n• Don't make it obvious (no flying, teleporting)\n• Update hack before each game session\n• Enable bypass features\n• Disable during tournaments\n\nTroubleshooting:\n• Game crashes: Lower hack settings\n• Detection warning: Update to latest version\n• Features not working: Check compatibility\n\nSupport available 24/7 for any issues.",
             ],
             [
+                'category_id' => $gamesCategory->id,
                 'name' => 'Call of Duty Mobile (CODM)',
                 'slug' => 'call-of-duty-mobile',
                 'image' => 'game/pubg.jpg',
@@ -57,6 +56,7 @@ class CardSeeder extends Seeder
                 'guide' => "Installation guide will be available once the hacks are released.\n\nIn the meantime:\n• Follow our social media for updates\n• Join our Discord community\n• Check back regularly for announcements\n\nExpected release: Coming soon!",
             ],
             [
+                'category_id' => $gamesCategory->id,
                 'name' => 'League of Legends: Wild Rift',
                 'slug' => 'wild-rift',
                 'image' => 'game/wildrift.jpg',
@@ -80,7 +80,7 @@ class CardSeeder extends Seeder
             Card::updateOrCreate(
                 ['name' => $gameData['name']],
                 [
-                    'category_id' => $category->id,
+                    'category_id' => $gameData['category_id'],
                     'status' => 1,
                     'trending' => 1,
                     'instant_delivery' => 1,

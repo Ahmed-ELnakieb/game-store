@@ -17,9 +17,12 @@ return new class extends Migration {
             $table->enum('type', ['top_up', 'card', 'game'])->default('card');
             $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
             $table->integer('sort_by')->default(1);
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->integer('active_children')->default(0);
             $table->softDeletes();
             $table->timestamps();
+            
+            $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
