@@ -23,7 +23,7 @@ $(document).ready(function () {
         loop: true,
         autoplay: true,
         margin: 20,
-        autoplayTimeout: 2000,
+        autoplayTimeout: 5000,
         navText: ["<i class='fa-regular fa-angle-left'></i>", "<i class='fa-regular fa-angle-right'></i>"],
         // rtl: true,
         responsive: {
