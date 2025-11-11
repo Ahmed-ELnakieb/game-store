@@ -4503,6 +4503,10 @@ Padding bottom
 .desktop-view .nav-link .icon {
     font-size: 14px;
 }
+.desktop-view .nav-link .fa-chevron-down,
+.desktop-view .nav-link .headerIconCheev {
+    margin-left: 4px;
+}
 .desktop-view .custom-nav {
   display: flex;
   align-items: center;
