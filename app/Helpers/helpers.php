@@ -857,7 +857,7 @@ if (!function_exists('getHeaderMenuData')) {
                 $menuIDetails = [
                     'name' => $pageDetails->page_name ?? $pageDetails->name ?? $menuItem,
                     'route' => isset($pageDetails->slug) ? route('page', $pageDetails->slug) : ($pageDetails->custom_link ?? staticPagesAndRoutes($menuItem)),
-                    'categories' => $catData->where('type', $cat_type)
+                    'categories' => $catData->whereIn('type', ['game', $cat_type])
                         ->map(function ($item) use ($cat_type) {
                             $item->search_url = ($cat_type == 'top_up') ? route('top-up', ['category' => $item->id]) : route('cards', ['category' => $item->id]);
                             return $item;

@@ -28,7 +28,7 @@ class CardController extends Controller
 
     public function cardList(Request $request)
     {
-        $data['categories'] = Category::type('card')->active()->sort()
+        $data['categories'] = Category::whereIn('type', ['card', 'game'])->active()->sort()
             ->get(['id', 'name', 'icon', 'type', 'active_children', 'status', 'sort_by']);
 
         $data['cards'] = Card::select(['id', 'category_id', 'region', 'status',
@@ -62,7 +62,7 @@ class CardController extends Controller
         $limit = request()->get('limit', 6);
 
         if (!$request->catId) {
-            $data['categories'] = Category::type('card')->active()->sort()
+            $data['categories'] = Category::whereIn('type', ['card', 'game'])->active()->sort()
                 ->get(['id', 'name', 'icon', 'type', 'active_children', 'status', 'sort_by']);
         }
 

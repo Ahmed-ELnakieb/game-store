@@ -175,5 +175,30 @@ class CardSeeder extends Seeder
         }
 
         $this->command->info("\n✓ Gift cards seeded successfully!");
+        
+        // Update category active_children counts
+        $this->updateCategoryCounts();
+    }
+    
+    /**
+     * Update the active_children count for all categories
+     */
+    private function updateCategoryCounts()
+    {
+        $this->command->info("\nUpdating category counts...");
+        
+        $categories = Category::all();
+        
+        foreach ($categories as $category) {
+            $count = Card::where('category_id', $category->id)
+                ->where('status', 1)
+                ->count();
+            
+            $category->update(['active_children' => $count]);
+            
+            $this->command->info("✓ {$category->name}: {$count} cards");
+        }
+        
+        $this->command->info("✓ Category counts updated!");
     }
 }

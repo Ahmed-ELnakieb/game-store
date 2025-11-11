@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             CardSeeder::class, // Game cards (HOK, MLBB, PUBG, etc.)
             CardServiceSeeder::class, // Hacks for each game
             ServicePricingSeeder::class, // Pricing for all hacks
+            ReviewSeeder::class, // Reviews for game hacks
             DiscountCouponSeeder::class, // Discount coupons
         ]);
     }

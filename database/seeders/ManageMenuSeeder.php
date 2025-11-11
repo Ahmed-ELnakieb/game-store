@@ -16,7 +16,7 @@ class ManageMenuSeeder extends Seeder
             [
                 'menu_section' => 'header',
                 'theme' => 'light',
-                'menu_items' => json_encode(['home', 'Top Up', 'Card', 'Buy', 'contact', 'developer']),
+                'menu_items' => json_encode(['home', 'Top Up', 'Card', 'Buy', 'contact']),
                 'created_at' => '2023-10-16 09:54:10',
                 'updated_at' => '2024-12-31 14:31:32',
             ],
@@ -33,7 +33,7 @@ class ManageMenuSeeder extends Seeder
             [
                 'menu_section' => 'header',
                 'theme' => 'dark',
-                'menu_items' => json_encode(['home', 'Top Up', 'Card', 'Buy', 'developer']),
+                'menu_items' => json_encode(['home', 'Top Up', 'Card', 'Buy', 'contact']),
                 'created_at' => '2023-10-16 09:54:10',
                 'updated_at' => '2025-02-05 07:16:45',
             ],
