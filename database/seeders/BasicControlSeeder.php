@@ -19,7 +19,7 @@ class BasicControlSeeder extends Seeder
   array (
     'id' => 1,
     'theme' => 'dark',
-    'site_title' => 'Gamers Arena',
+    'site_title' => 'Hokqqcheto',
     'time_zone' => 'UTC',
     'base_currency' => 'USD',
     'currency_symbol' => '$',
@@ -32,8 +32,8 @@ class BasicControlSeeder extends Seeder
     'strong_password' => 0,
     'registration' => 1,
     'fraction_number' => 2,
-    'sender_email' => 'support@gmail.com',
-    'sender_email_name' => 'Bug Admin',
+    'sender_email' => 'bubblegumm545432@gmail.com',
+    'sender_email_name' => 'Gamers Arena',
     'email_description' => '<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width">
 <style type="text/css">
@@ -1092,7 +1092,7 @@ class BasicControlSeeder extends Seeder
     'coin_market_cap_auto_update_at' => 'everyMinute',
     'coin_market_cap_auto_update' => 0,
     'date_time_format' => 'l, F j, Y',
-    'contact_number' => '+15255 5552489',
+    'contact_number' => '+8801762343843',
     'cookie_status' => 1,
     'cookie_heading' => 'We Use Cookies!',
     'cookie_description' => 'We use cookies to ensure that give you the best experience on your website.',
