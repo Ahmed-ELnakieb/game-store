@@ -163,7 +163,7 @@ class ContentDetailSeeder extends Seeder
     'id' => 17,
     'content_id' => 17,
     'language_id' => 1,
-    'description' => '{"trend_title":"Trending Items","trend_sub_title":"Don\'t miss out\\u2014grab yours now!"}',
+    'description' => '{"trend_title":"Trending Hacks","trend_sub_title":"Don\'t miss out\\u2014grab yours now!"}',
     'created_at' => '2024-12-09 08:32:42',
     'updated_at' => '2024-12-09 09:01:32',
   ),

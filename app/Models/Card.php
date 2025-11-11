@@ -100,4 +100,37 @@ class Card extends Model
             return route('card.details', $this->slug);
         }
     }
+
+    // Get the lowest price from all services
+    public function getLowestPriceAttribute()
+    {
+        $lowestPrice = null;
+        foreach($this->services as $service) {
+            $serviceLowestPrice = $service->lowest_price;
+            if ($serviceLowestPrice > 0 && (!$lowestPrice || $serviceLowestPrice < $lowestPrice)) {
+                $lowestPrice = $serviceLowestPrice;
+            }
+        }
+        return $lowestPrice ?? 0;
+    }
+
+    // Get price attribute (for compatibility)
+    public function getPriceAttribute()
+    {
+        return $this->lowest_price;
+    }
+
+    // Get discount from the service with lowest price
+    public function getDiscountAttribute()
+    {
+        $serviceWithLowest = $this->serviceWithLowestPrice();
+        return $serviceWithLowest ? $serviceWithLowest->discount : 0;
+    }
+
+    // Get discount type from the service with lowest price
+    public function getDiscountTypeAttribute()
+    {
+        $serviceWithLowest = $this->serviceWithLowestPrice();
+        return $serviceWithLowest ? $serviceWithLowest->discount_type : null;
+    }
 }

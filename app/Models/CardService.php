@@ -90,4 +90,37 @@ class CardService extends Model
         }
         return $discount;
     }
+
+    // Get the lowest price from all pricings
+    public function getLowestPriceAttribute()
+    {
+        $lowestPricing = $this->pricings()->orderBy('price', 'asc')->first();
+        return $lowestPricing ? $lowestPricing->price : 0;
+    }
+
+    // Get the lowest pricing object
+    public function getLowestPricingAttribute()
+    {
+        return $this->pricings()->orderBy('price', 'asc')->first();
+    }
+
+    // Get price attribute (for compatibility)
+    public function getPriceAttribute()
+    {
+        return $this->lowest_price;
+    }
+
+    // Get discount from lowest pricing
+    public function getDiscountAttribute()
+    {
+        $lowestPricing = $this->lowest_pricing;
+        return $lowestPricing ? $lowestPricing->discount : 0;
+    }
+
+    // Get discount type from lowest pricing
+    public function getDiscountTypeAttribute()
+    {
+        $lowestPricing = $this->lowest_pricing;
+        return $lowestPricing ? $lowestPricing->discount_type : null;
+    }
 }

@@ -104,7 +104,7 @@ trait Frontend
     public function getCards($section, $selectedTheme, $singleContent, $multipleContents)
     {
         if ($section == $selectedTheme . '_trending_item') {
-            $trendingItems = Card::with(['services'])
+            $trendingItems = Card::with(['services.pricings'])
                 ->where('status', 1)
                 ->orderBy('sort_by', 'ASC')
                 ->take(10)
@@ -138,7 +138,10 @@ trait Frontend
     {
         if ($section == $selectedTheme . '_hero') {
             $trendingItems = CardService::has('card')
-                ->with(['card:id,name,slug,avg_rating,total_review,trending'])
+                ->with([
+                    'card:id,name,slug,avg_rating,total_review,trending',
+                    'pricings'
+                ])
                 ->whereHas('card', function ($query) {
                     $query->where('trending', 1);
                 })
