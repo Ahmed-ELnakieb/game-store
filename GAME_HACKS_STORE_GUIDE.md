@@ -312,8 +312,11 @@ php artisan db:seed --class=GameHacksWithPricingSeeder
 
 ### Backup Important Data
 - Database (especially `cards`, `card_services`, `service_pricing`)
-- Images in `assets/upload/`
+- Images in `public/assets/upload/` (not tracked in git)
 - Configuration files
+
+### Git Configuration
+The `public/assets/upload/` folder is ignored in git to prevent committing uploaded images. Only the folder structure (`.gitkeep`) is tracked.
 
 ---
 
