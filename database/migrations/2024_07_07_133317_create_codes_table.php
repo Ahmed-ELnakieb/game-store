@@ -13,9 +13,12 @@ return new class extends Migration {
         Schema::create('codes', function (Blueprint $table) {
             $table->id();
             $table->morphs('codeable');
+            $table->unsignedBigInteger('duration_id')->nullable();
             $table->string('passcode')->nullable();
             $table->boolean('status')->default(1)->comment("0=>inactive,1=>active");
             $table->timestamps();
+            
+            $table->foreign('duration_id')->references('id')->on('service_durations')->onDelete('set null');
         });
     }
 

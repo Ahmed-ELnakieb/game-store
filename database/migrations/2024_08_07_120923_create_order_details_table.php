@@ -16,6 +16,8 @@ return new class extends Migration {
             $table->foreignId('user_id')->nullable()->index();
             $table->foreignId('order_id')->index();
             $table->morphs('detailable');
+            $table->foreignId('pricing_id')->nullable()->comment('Service pricing ID for duration-based pricing');
+            $table->foreignId('duration_id')->nullable()->comment('Service duration ID');
             $table->string('name')->nullable();
             $table->string('image')->nullable();
             $table->string('image_driver')->nullable();

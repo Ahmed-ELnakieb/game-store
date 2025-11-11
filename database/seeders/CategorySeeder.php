@@ -11,7 +11,7 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             [
-                'name' => 'Gaming',
+                'name' => 'Game Hacks',
                 'icon' => null,
                 'type' => 'game',
                 'status' => 1,
@@ -21,11 +21,21 @@ class CategorySeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'name' => 'Gaming',
+                'icon' => null,
+                'type' => 'game',
+                'status' => 1,
+                'sort_by' => 2,
+                'active_children' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'name' => 'Mobile Top Up',
                 'icon' => null,
                 'type' => 'top_up',
                 'status' => 1,
-                'sort_by' => 2,
+                'sort_by' => 3,
                 'active_children' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -35,7 +45,7 @@ class CategorySeeder extends Seeder
                 'icon' => null,
                 'type' => 'card',
                 'status' => 1,
-                'sort_by' => 3,
+                'sort_by' => 4,
                 'active_children' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),

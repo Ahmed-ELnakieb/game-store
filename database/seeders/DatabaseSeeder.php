@@ -33,8 +33,11 @@ class DatabaseSeeder extends Seeder
             ContentSeeder::class,
             ContentDetailSeeder::class,
             PageDetailSeeder::class,
-            ServiceDurationSeeder::class, // New: Duration management
-            CompleteGameHacksSeeder::class, // New: Sample game hacks with pricing
+            ServiceDurationSeeder::class,
+            CardSeeder::class, // Game cards (HOK, MLBB, PUBG, etc.)
+            CardServiceSeeder::class, // Hacks for each game
+            ServicePricingSeeder::class, // Pricing for all hacks
+            DiscountCouponSeeder::class, // Discount coupons
         ]);
     }
 }

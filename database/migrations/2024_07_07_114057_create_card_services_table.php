@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('card_id')->index();
             $table->string('name')->nullable();
+            $table->text('description')->nullable();
             $table->text('image')->nullable();
             $table->string('image_driver')->nullable();
             $table->double('price')->nullable();
