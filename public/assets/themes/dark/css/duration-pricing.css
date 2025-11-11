@@ -1,0 +1,189 @@
+/* Duration-based Pricing Styles */
+.hack-type-section {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    background: #fff;
+}
+
+.hack-type-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.hack-type-header .img-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.hack-type-header .img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hack-type-header .text-box h6 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+}
+
+.duration-options {
+    margin-top: 15px;
+}
+
+.duration-box {
+    display: block;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    height: 100%;
+}
+
+.duration-box:hover {
+    border-color: #007bff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.duration-box.active {
+    border-color: #007bff;
+    background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+.duration-box.out-of-stock {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f5f5f5;
+}
+
+.duration-box.out-of-stock:hover {
+    border-color: #e0e0e0;
+    box-shadow: none;
+    transform: none;
+}
+
+.duration-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.duration-name strong {
+    font-size: 16px;
+    color: #333;
+    display: block;
+}
+
+.duration-name small {
+    font-size: 12px;
+    color: #666;
+}
+
+.duration-price {
+    text-align: right;
+}
+
+.duration-price .price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #007bff;
+}
+
+.duration-price .original-price {
+    font-size: 14px;
+    color: #999;
+    text-decoration: line-through;
+    margin-top: 2px;
+}
+
+.discount-badge {
+    display: inline-block;
+    background: #ff4444;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.stock-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #ff4444;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.stock-badge.low-stock {
+    background: #ff9800;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hack-type-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .duration-info {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .duration-price {
+        text-align: center;
+    }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .hack-type-section {
+        background: #1a1a1a;
+        border-color: #333;
+    }
+    
+    .hack-type-header {
+        border-bottom-color: #333;
+    }
+    
+    .hack-type-header .text-box h6 {
+        color: #fff;
+    }
+    
+    .duration-box {
+        background: #1a1a1a;
+        border-color: #333;
+    }
+    
+    .duration-box.active {
+        background: linear-gradient(135deg, #1a2332 0%, #0d1929 100%);
+    }
+    
+    .duration-name strong {
+        color: #fff;
+    }
+    
+    .duration-name small {
+        color: #aaa;
+    }
+}
