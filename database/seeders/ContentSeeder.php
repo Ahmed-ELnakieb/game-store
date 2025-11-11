@@ -223,6 +223,15 @@ class ContentSeeder extends Seeder
   ),
   23 => 
   array (
+    'id' => 69,
+    'name' => 'dark_special_offer',
+    'type' => 'single',
+    'media' => '{"button_link":"\\/cards"}',
+    'created_at' => '2025-02-11 10:00:00',
+    'updated_at' => '2025-02-11 10:00:00',
+  ),
+  24 => 
+  array (
     'id' => 24,
     'name' => 'dark_why_chose_us',
     'type' => 'single',

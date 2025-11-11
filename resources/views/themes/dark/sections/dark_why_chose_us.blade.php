@@ -23,8 +23,17 @@
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-duration="500">
                     <div class="img-box">
-                        <img src="{{ getFile($dark_why_chose_us['single']['media']->image->driver, $dark_why_chose_us['single']['media']->image->path) }}"
-                             alt="why-choose-img">
+                        @if(isset($dark_why_chose_us['single']['media']->image))
+                            <img src="{{ getFile($dark_why_chose_us['single']['media']->image->driver, $dark_why_chose_us['single']['media']->image->path) }}"
+                                 alt="why-choose-img">
+                        @else
+                            @php
+                                $randomImages = glob(public_path('assets/upload/random/*.{jpg,jpeg,png,webp}'), GLOB_BRACE);
+                                $randomImage = !empty($randomImages) ? basename($randomImages[array_rand($randomImages)]) : 'default.jpg';
+                            @endphp
+                            <img src="{{ asset('assets/upload/random/' . $randomImage) }}"
+                                 alt="why-choose-img">
+                        @endif
                     </div>
                 </div>
             </div>

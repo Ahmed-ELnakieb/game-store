@@ -223,6 +223,15 @@ class ContentDetailSeeder extends Seeder
   ),
   23 => 
   array (
+    'id' => 69,
+    'content_id' => 69,
+    'language_id' => 1,
+    'description' => '{"title":"SPECIAL OFFER 35% OFF","description":"The best deal in our hacks! Get premium gaming tools for Honor of Kings, Mobile Legends, Wild Rift, and PUBG at an unbeatable price.","sub_description":"Our special offer includes access to all premium features, regular updates, and 24\\/7 customer support. Limited time only!","button":"SHOP SALE","button_link":"/cards"}',
+    'created_at' => '2025-02-11 10:00:00',
+    'updated_at' => '2025-02-11 10:00:00',
+  ),
+  24 => 
+  array (
     'id' => 24,
     'content_id' => 24,
     'language_id' => 1,
@@ -253,7 +262,7 @@ class ContentDetailSeeder extends Seeder
     'id' => 27,
     'content_id' => 27,
     'language_id' => 1,
-    'description' => '{"title":"Featured Game Hacks","button":"View All Hacks","button_link":"/cards"}',
+    'description' => '{"title":"Regular Updates","description":"Stay ahead with frequent updates that keep our hacks compatible with the latest game versions and security patches."}',
     'created_at' => '2024-12-11 13:17:31',
     'updated_at' => '2024-12-11 13:17:31',
   ),

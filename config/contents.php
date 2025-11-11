@@ -118,6 +118,28 @@ return [
             ],
         'theme' => 'dark',
     ],
+    'dark_special_offer' => [
+        'single' => [
+            'field_name' => [
+                'title' => 'text',
+                'description' => 'textarea',
+                'sub_description' => 'textarea',
+                'button' => 'text',
+                'button_link' => 'text',
+            ],
+            'validation' => [
+                'title.*' => 'required|max:100',
+                'description.*' => 'required|max:500',
+                'sub_description.*' => 'required|max:500',
+                'button.*' => 'required|max:100',
+                'button_link.*' => 'required|max:200',
+            ]
+        ],
+        'preview' =>[
+            'Dark Theme Image' => 'assets/preview/dark/special_offer.png'
+            ],
+        'theme' => 'dark',
+    ],
     'dark_why_chose_us' => [
         'single' => [
             'field_name' => [
