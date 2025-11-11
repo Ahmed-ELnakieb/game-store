@@ -14,6 +14,14 @@ class ContentDetailSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $data = array (
+  array (
+    'id' => 69,
+    'content_id' => 23,
+    'language_id' => 1,
+    'description' => '{"heading":"Featured Game Hacks","sub_heading":"Top-rated hacks trusted by gamers worldwide","button_name":"View All Hacks"}',
+    'created_at' => '2025-02-11 10:00:00',
+    'updated_at' => '2025-02-11 10:00:00',
+  ),
   0 => 
   array (
     'id' => 1,

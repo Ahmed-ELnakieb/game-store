@@ -128,6 +128,9 @@ class PageDetailSeeder extends Seeder
     'content' => '<div class="custom-block" contenteditable="false"><div class="custom-block-content">[[dark_hero]]</div>
                     <span class="delete-block">×</span>
                     <span class="up-block">↑</span>
+                    <span class="down-block">↓</span></div><p><br></p><div class="custom-block" contenteditable="false"><div class="custom-block-content">[[dark_special_offer]]</div>
+                    <span class="delete-block">×</span>
+                    <span class="up-block">↑</span>
                     <span class="down-block">↓</span></div><p><br></p><div class="custom-block" contenteditable="false"><div class="custom-block-content">[[dark_exclusive_card]]</div>
                     <span class="delete-block">×</span>
                     <span class="up-block">↑</span>
@@ -153,7 +156,7 @@ class PageDetailSeeder extends Seeder
                     <span class="delete-block">×</span>
                     <span class="up-block">↑</span>
                     <span class="down-block">↓</span></div><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p><p><br></p>',
-    'sections' => '["dark_hero","dark_exclusive_card","dark_about","dark_campaign","dark_top_up","dark_why_chose_us","dark_buy_game_id","dark_testimonial","dark_blog"]',
+    'sections' => '["dark_hero","dark_special_offer","dark_exclusive_card","dark_about","dark_campaign","dark_top_up","dark_why_chose_us","dark_buy_game_id","dark_testimonial","dark_blog"]',
     'created_at' => '2024-12-08 13:44:19',
     'updated_at' => '2024-12-15 08:27:25',
   ),
