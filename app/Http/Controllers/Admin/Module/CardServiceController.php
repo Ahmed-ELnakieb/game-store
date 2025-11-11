@@ -81,7 +81,9 @@ class CardServiceController extends Controller
 
             })
             ->addColumn('name', function ($item) {
-                $url = getFile($item->image_driver ?? null, $item->image ?? null);
+                $url = $item->image ? asset('assets/upload/' . $item->image) : asset('assets/upload/default.png');
+                // Add timestamp to prevent caching
+                $url .= '?v=' . time();
                 $offerContent = $item->is_offered ? '<div class="trending-content"><i class="fa-light fa-badge-percent"></i>' . trans('Campaign') . '</div>' : '';
                 return '<a class="d-flex align-items-center me-2" href="javascript:void(0)">
                                 <div class="list-group-item">
@@ -137,7 +139,9 @@ class CardServiceController extends Controller
                 }
                 $delete = route('admin.cardService.delete', $item->id);
                 $edit = route('admin.cardService.update', $item->id);
-                $image = getFile($item->image_driver ?? null, $item->image ?? null);
+                $image = $item->image ? asset('assets/upload/' . $item->image) : asset('assets/upload/default.png');
+                // Add timestamp to prevent caching
+                $image .= '?v=' . $item->updated_at->timestamp;
                 $code = route('admin.cardServiceCode.list') . '?service_id=' . $item->id;
 
                 $html = '<div class="btn-group sortable" role="group" data-id ="' . $item->id . '">
@@ -147,11 +151,16 @@ class CardServiceController extends Controller
                         <i class="fal fa-edit me-1"></i> ' . trans("Edit") . '
                       </a>';
 
+                $pricing = route('admin.service.pricing') . '?service_id=' . $item->id;
+                
                 $html .= '<div class="btn-group">
                       <button type="button" class="btn btn-white btn-icon btn-sm dropdown-toggle dropdown-toggle-empty" id="userEditDropdown" data-bs-toggle="dropdown" aria-expanded="false"></button>
                       <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="userEditDropdown">
+                        <a href="' . $pricing . '" class="dropdown-item">
+                            <i class="fal fa-tags dropdown-item-icon"></i> ' . trans("Manage Pricing") . '
+                        </a>
                         <a href="' . $code . '" class="dropdown-item">
-                            <i class="fal fa-dice-d20 dropdown-item-icon"></i> ' . trans("Code List") . '
+                            <i class="fal fa-key dropdown-item-icon"></i> ' . trans("Activation Keys") . '
                         </a>
                         <a href="' . $statusChange . '" class="dropdown-item">
                             <i class="fal fa-badge dropdown-item-icon"></i> ' . trans($statusBtn) . '
@@ -175,8 +184,38 @@ class CardServiceController extends Controller
         Card::select(['id'])->findOrFail($request->card_id);
         try {
             $service = new CardService();
-            $fillData = $request->except('_token');
-            $service->fill($fillData)->save();
+            $service->card_id = $request->card_id;
+            $service->name = $request->name;
+            $service->price = $request->price;
+            $service->discount = $request->discount ?? 0;
+            $service->discount_type = $request->discount_type ?? 'flat';
+            
+            // Handle image upload - SIMPLE approach
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '_' . uniqid() . '.webp';
+                $uploadPath = public_path('assets/upload/card-service');
+                
+                // Create directory if doesn't exist
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
+                
+                // Resize and save image
+                $img = \Image::make($image);
+                $size = explode('x', config('filelocation.cardService.size'));
+                if (count($size) == 2) {
+                    $img->resize($size[0], $size[1]);
+                }
+                $img->encode('webp', 60);
+                $img->save($uploadPath . '/' . $imageName);
+                
+                // Save path to database
+                $service->image = 'card-service/' . $imageName;
+                $service->image_driver = 'local';
+            }
+            
+            $service->save();
             return back()->with('success', 'Service Created Successfully');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -187,11 +226,51 @@ class CardServiceController extends Controller
     {
         $service = CardService::findOrFail($id);
         try {
-            $fillData = $request->except('_token');
-            $service->fill($fillData)->save();
+            // Update basic fields
+            $service->name = $request->name;
+            $service->price = $request->price;
+            $service->discount = $request->discount;
+            $service->discount_type = $request->discount_type;
+            
+            // Handle image upload - SIMPLE approach like other sections
+            if ($request->hasFile('image')) {
+                // Delete old image if exists
+                if ($service->image) {
+                    $oldImagePath = public_path('assets/upload/' . $service->image);
+                    if (file_exists($oldImagePath)) {
+                        @unlink($oldImagePath);
+                    }
+                }
+                
+                // Upload new image directly to public/assets/upload/card-service/
+                $image = $request->file('image');
+                $imageName = time() . '_' . uniqid() . '.webp';
+                $uploadPath = public_path('assets/upload/card-service');
+                
+                // Create directory if doesn't exist
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
+                
+                // Resize and save image
+                $img = \Image::make($image);
+                $size = explode('x', config('filelocation.cardService.size'));
+                if (count($size) == 2) {
+                    $img->resize($size[0], $size[1]);
+                }
+                $img->encode('webp', 60);
+                $img->save($uploadPath . '/' . $imageName);
+                
+                // Save path to database (relative path)
+                $service->image = 'card-service/' . $imageName;
+                $service->image_driver = 'local';
+            }
+            
+            $service->save();
+            
             return back()->with('success', 'Service Updated Successfully');
         } catch (\Exception $e) {
-            return back() > with('error', $e->getMessage());
+            return back()->with('error', 'Failed to update service: ' . $e->getMessage());
         }
     }
 
@@ -223,7 +302,13 @@ class CardServiceController extends Controller
     {
         $service = CardService::findOrFail($id);
         try {
-            $this->fileDelete($service->image_driver, $service->image);
+            // Delete image file if exists
+            if ($service->image) {
+                $imagePath = public_path('assets/upload/' . $service->image);
+                if (file_exists($imagePath)) {
+                    @unlink($imagePath);
+                }
+            }
             $service->delete();
             return back()->with('success', 'Deleted Successfully');
         } catch (\Exception $e) {
@@ -238,7 +323,13 @@ class CardServiceController extends Controller
             return response()->json(['error' => 1]);
         } else {
             CardService::whereIn('id', $request->strIds)->get()->map(function ($query) {
-                $this->fileDelete($query->image_driver, $query->image);
+                // Delete image file if exists
+                if ($query->image) {
+                    $imagePath = public_path('assets/upload/' . $query->image);
+                    if (file_exists($imagePath)) {
+                        @unlink($imagePath);
+                    }
+                }
                 $query->delete();
                 return $query;
             });

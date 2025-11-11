@@ -43,34 +43,74 @@
                     @if(!empty($card->activeServices))
                         <div class="row g-3">
                             @foreach($card->activeServices as $key => $service)
-                                <div class="col-lg-6">
-                                    <a href="javascript:void(0)" class="product-box2 {{$key == 0 ? 'active':''}}"
-                                       data-id="{{$service->id}}"
-                                       data-symbol="{{basicControl()->currency_symbol}}"
-                                       data-price="{{userCurrencyPosition(showActualPrice($service))}}"
-                                       data-discount="{{userCurrencyPosition($service->getDiscount())}}">
-                                        <div class="left-side">
+                                <div class="col-12">
+                                    <div class="hack-type-section">
+                                        <div class="hack-type-header">
                                             <div class="img-box">
                                                 <img src="{{$service->imagePath()}}" alt="{{$service->name}}">
                                             </div>
                                             <div class="text-box">
-                                                <div class="title">{{$service->name}}</div>
-                                            </div>
-                                        </div>
-                                        <div class="right-side">
-                                            <div class="price">
-                                                <div
-                                                    class="promo-price">{{userCurrencyPosition(showActualPrice($service))}}</div>
-                                                @if($service->discount)
-                                                    <div
-                                                        class="original-price line-through">{{userCurrencyPosition($service->price)}}</div>
+                                                <h6 class="mb-1">{{ $service->name }}</h6>
+                                                @if($service->activePricings->count() > 0)
+                                                    <small class="text-muted">@lang('Available in') {{ $service->activePricings->count() }} @lang('durations')</small>
+                                                @else
+                                                    <small class="text-danger">@lang('No pricing available')</small>
                                                 @endif
                                             </div>
-                                            @if(count($service->activeCodes) < 1)
-                                                <small>@lang('stock short')</small>
-                                            @endif
                                         </div>
-                                    </a>
+                                        
+                                        @if($service->activePricings->count() > 0)
+                                            <div class="duration-options mt-3">
+                                                <div class="row g-2">
+                                                    @foreach($service->activePricings as $pricingKey => $pricing)
+                                                        @php
+                                                            $finalPrice = $pricing->getFinalPrice();
+                                                            $hasStock = $pricing->stock_count > 0;
+                                                        @endphp
+                                                        <div class="col-lg-4 col-md-6">
+                                                            <a href="javascript:void(0)" 
+                                                               class="duration-box {{$key == 0 && $pricingKey == 0 ? 'active':''}} {{!$hasStock ? 'out-of-stock':''}}"
+                                                               data-service-id="{{$service->id}}"
+                                                               data-pricing-id="{{$pricing->id}}"
+                                                               data-duration-id="{{$pricing->duration_id}}"
+                                                               data-symbol="{{basicControl()->currency_symbol}}"
+                                                               data-price="{{$finalPrice}}"
+                                                               data-original-price="{{$pricing->price}}"
+                                                               data-discount="{{$pricing->discount}}"
+                                                               data-discount-type="{{$pricing->discount_type}}"
+                                                               data-stock="{{$pricing->stock_count}}"
+                                                               {{!$hasStock ? 'onclick="return false;"':''}}>
+                                                                <div class="duration-info">
+                                                                    <div class="duration-name">
+                                                                        <strong>{{ $pricing->duration->name }}</strong>
+                                                                        <small class="d-block text-muted">{{ $pricing->duration->days }} @lang('days')</small>
+                                                                    </div>
+                                                                    <div class="duration-price">
+                                                                        <div class="price">{{userCurrencyPosition($finalPrice)}}</div>
+                                                                        @if($pricing->discount > 0)
+                                                                            <div class="original-price">{{userCurrencyPosition($pricing->price)}}</div>
+                                                                            <span class="discount-badge">
+                                                                                @if($pricing->discount_type == 'percentage')
+                                                                                    -{{$pricing->discount}}%
+                                                                                @else
+                                                                                    -{{userCurrencyPosition($pricing->discount)}}
+                                                                                @endif
+                                                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                @if(!$hasStock)
+                                                                    <div class="stock-badge">@lang('Out of Stock')</div>
+                                                                @elseif($pricing->stock_count < 10)
+                                                                    <div class="stock-badge low-stock">@lang('Only') {{$pricing->stock_count}} @lang('left')</div>
+                                                                @endif
+                                                            </a>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -129,24 +169,32 @@
 @push('extra_scripts')
     <script>
         'use strict';
-        var activeGiftCard = $('.product-box2.active');
-        var initialPrice = activeGiftCard.data('price').replace(/[^\d.]/g, "");
-        var price = activeGiftCard.data('price').replace(/[^\d.]/g, "");
-        var initialDiscount =  parseFloat(activeGiftCard.data('discount').replace(/[^\d.]/g, ""));
-        var discount = parseFloat(activeGiftCard.data('discount').replace(/[^\d.]/g, ""));
-        var serviceId = activeGiftCard.data('id');
+        var activeDuration = $('.duration-box.active:not(.out-of-stock)');
+        var initialPrice = activeDuration.length > 0 ? parseFloat(activeDuration.data('price')) : 0;
+        var price = initialPrice;
+        var serviceId = activeDuration.length > 0 ? activeDuration.data('service-id') : null;
+        var pricingId = activeDuration.length > 0 ? activeDuration.data('pricing-id') : null;
+        var durationId = activeDuration.length > 0 ? activeDuration.data('duration-id') : null;
+        var discount = activeDuration.length > 0 ? parseFloat(activeDuration.data('discount')) || 0 : 0;
+        var discountType = activeDuration.length > 0 ? activeDuration.data('discount-type') : 'flat';
         var newValue = 1;
         var currencySymbol = '{{ session()->get('currency_symbol', basicControl()->currency_symbol) }}';
         var isLogin = "{{auth()->check()}}";
 
         showOrderInfo();
 
-        $(document).on("click", ".product-box2", function () {
-            initialPrice = $(this).data('price').replace(/[^\d.]/g, "");
-            price = $(this).data('price').replace(/[^\d.]/g, "");
-            initialDiscount = $(this).data('discount').replace(/[^\d.]/g, "");
-            discount = $(this).data('discount').replace(/[^\d.]/g, "");
-            serviceId = $(this).data('id');
+        $(document).on("click", ".duration-box:not(.out-of-stock)", function () {
+            $('.duration-box').removeClass('active');
+            $(this).addClass('active');
+            
+            initialPrice = parseFloat($(this).data('price'));
+            price = initialPrice;
+            serviceId = $(this).data('service-id');
+            pricingId = $(this).data('pricing-id');
+            durationId = $(this).data('duration-id');
+            discount = parseFloat($(this).data('discount')) || 0;
+            discountType = $(this).data('discount-type');
+            
             quantityBtn(0);
         });
 
@@ -164,71 +212,88 @@
 
             quantityElement.val(newValue);
             price = (initialPrice * newValue).toFixed(2);
-            discount = (initialDiscount * newValue).toFixed(2);
             showOrderInfo();
         }
 
         function showOrderInfo() {
+            let discountAmount = 0;
+            if (discount > 0) {
+                if (discountType === 'percentage') {
+                    discountAmount = ((initialPrice * discount) / 100) * newValue;
+                } else {
+                    discountAmount = discount * newValue;
+                }
+            }
 
             $('#showPrice').text(`${currencySymbol}${price}`);
-            $('#showDiscount').text(`${currencySymbol}${discount}`);
-            $('input[name="serviceId"]').val(serviceId);
+            $('#showDiscount').text(`${currencySymbol}${discountAmount.toFixed(2)}`);
         }
 
         function addToCart() {
+            if (!serviceId || !pricingId) {
+                Notiflix.Notify.failure('Please select a duration');
+                return 0;
+            }
+            
             if (isLogin == false) {
                 Notiflix.Notify.failure('Please Login before add to cart');
                 return 0;
             }
+            
             $(".btn-ring").show();
             axios.post("{{route('cart.user.addCart')}}", {
                 serviceId: serviceId,
+                pricingId: pricingId,
+                durationId: durationId,
                 quantity: newValue,
                 type: 'card',
             })
                 .then(function (response) {
                     $(".btn-ring").hide();
                     if (response.data.status) {
-                        Notiflix.Notify.success('Added Cart');
+                        Notiflix.Notify.success('Added to Cart');
                         cartCount();
                     } else {
                         Notiflix.Notify.failure(response.data.message);
                     }
                 })
                 .catch(function (error) {
-
+                    $(".btn-ring").hide();
+                    Notiflix.Notify.failure('Something went wrong');
                 });
         }
 
         function buyNow() {
+            if (!serviceId || !pricingId) {
+                Notiflix.Notify.failure('Please select a duration');
+                return 0;
+            }
+            
             if (isLogin == false) {
-                Notiflix.Notify.failure('Please Login before purchase card');
+                Notiflix.Notify.failure('Please Login before purchase');
                 return 0;
             }
 
             $(".btn-ring2").show();
             axios.post("{{route('card.user.singleOrder')}}", {
                 serviceId: serviceId,
+                pricingId: pricingId,
+                durationId: durationId,
                 quantity: newValue,
             })
                 .then(function (response) {
                     $(".btn-ring2").hide();
-                    window.location.href = response.data.route;
+                    if (response.data.status) {
+                        window.location.href = response.data.route;
+                    } else {
+                        Notiflix.Notify.failure(response.data.message);
+                    }
                 })
                 .catch(function (error) {
-
+                    $(".btn-ring2").hide();
+                    Notiflix.Notify.failure('Something went wrong');
                 });
         }
-
-        // Active class start
-        const productBoxs = document.querySelectorAll('.product-box2');
-        productBoxs.forEach(productBox => {
-            productBox.addEventListener('click', () => {
-                productBoxs.forEach(productBox => productBox.classList.remove('active'));
-                productBox.classList.add('active');
-            })
-        })
-        // Active class end
 
     </script>
 @endpush

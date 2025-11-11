@@ -77,7 +77,7 @@
 
 
                     @if(adminAccessRoute('Card'))
-                        <span class="dropdown-header mt-2">@lang('Cards')</span>
+                        <span class="dropdown-header mt-2">@lang('Game Hacks')</span>
                         <small class="bi-three-dots nav-subtitle-replacer"></small>
                         <div class="nav-item">
                             <a class="nav-link {{ request()->query('type') == 'card'? 'active' : '' }}"
@@ -90,8 +90,8 @@
                             <a class="nav-link {{ menuActive(['admin.card.list','admin.card.store','admin.card.edit',
                            'admin.cardService.list','admin.cardServiceCode.list']) }}"
                                href="{{ route('admin.card.list') }}" data-placement="left">
-                                <i class="fas fa-vr-cardboard nav-icon"></i>
-                                <span class="nav-link-title">@lang("Card")</span>
+                                <i class="fas fa-gamepad nav-icon"></i>
+                                <span class="nav-link-title">@lang("Games")</span>
                             </a>
                         </div>
                     @endif

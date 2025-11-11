@@ -34,4 +34,14 @@ class OrderDetail extends Model
     {
         return $this->morphTo();
     }
+
+    public function pricing()
+    {
+        return $this->belongsTo(ServicePricing::class, 'pricing_id');
+    }
+
+    public function duration()
+    {
+        return $this->belongsTo(ServiceDuration::class, 'duration_id');
+    }
 }

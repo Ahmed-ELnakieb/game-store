@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="{{ asset(template(true) . 'css/jquery-ui.theme.min.css')}}">
     <link rel="stylesheet" href="{{ asset(template(true) . 'css/meanmenu.css')}}">
     <link rel="stylesheet" href="{{ asset(template(true) . 'css/nice-select.css')}}">
+    <link rel="stylesheet" href="{{ asset(template(true) . 'css/duration-pricing.css')}}">
 
     <link rel="stylesheet" href="{{ asset(template(true) . 'css/style.css')}}">
 

@@ -43,20 +43,51 @@ trait MakeOrder
         }
         $orderDetails = [];
         foreach ($services as $key => $service) {
+            // Handle new pricing structure
+            $quantityData = isset($order->order_interface) && $order->order_interface === 'API'
+                ? ($quantities[$key] ?? 1)
+                : ($quantities[$service->id] ?? 1);
+            
+            $qty = is_array($quantityData) ? ($quantityData['quantity'] ?? 1) : $quantityData;
+            $pricingId = is_array($quantityData) ? ($quantityData['pricing_id'] ?? null) : null;
+            $durationId = is_array($quantityData) ? ($quantityData['duration_id'] ?? null) : null;
+            
+            // Calculate price and discount based on pricing if available
+            if ($pricingId) {
+                $pricing = \App\Models\ServicePricing::find($pricingId);
+                if ($pricing) {
+                    $price = $pricing->price;
+                    $discount = 0;
+                    if ($pricing->discount > 0) {
+                        if ($pricing->discount_type == 'percentage') {
+                            $discount = ($pricing->discount * $pricing->price) / 100;
+                        } else {
+                            $discount = $pricing->discount;
+                        }
+                    }
+                } else {
+                    $price = $service->price;
+                    $discount = $service->getDiscount();
+                }
+            } else {
+                $price = $service->price;
+                $discount = $service->getDiscount();
+            }
+            
             $orderDetails[] = [
                 'user_id' => $order->user_id,
                 'order_id' => $order->id,
                 'parent_id' => $model == TopUpService::class ? $service->top_up_id : $service->card_id,
                 'detailable_type' => $model,
                 'detailable_id' => $service->id,
+                'pricing_id' => $pricingId,
+                'duration_id' => $durationId,
                 'name' => $service->name,
                 'image' => $service->image,
                 'image_driver' => $service->image_driver,
-                'price' => $service->price,
-                'discount' => $service->getDiscount(),
-                'qty' => isset($order->order_interface) && $order->order_interface === 'API'
-                    ? ($quantities[$key] ?? 1)
-                    : ($quantities[$service->id] ?? 1),
+                'price' => $price,
+                'discount' => $discount,
+                'qty' => $qty,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ];

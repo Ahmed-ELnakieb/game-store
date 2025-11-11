@@ -64,6 +64,17 @@ class FrontendController extends Controller
         } catch (\Exception $exception) {
 
             \Cache::forget('ConfigureSetting');
+            
+            // DEBUG: Log the actual exception
+            \Log::error('FrontendController page error', [
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'slug' => $slug,
+                'theme' => $selectedTheme ?? 'unknown'
+            ]);
+            
             if ($exception->getCode() == 404) {
                 abort(404);
             }
@@ -91,6 +102,12 @@ class FrontendController extends Controller
             if ($exception->getCode() == 2002) {
                 die("Unable to connect to the MySQL server. Check the database host and ensure the server is running.");
             }
+            
+            // Show the actual error in development
+            if (config('app.debug')) {
+                throw $exception;
+            }
+            
             return redirect()->route('instructionPage');
 
         }

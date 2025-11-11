@@ -13,6 +13,7 @@
 
 
 <link rel="stylesheet" href="{{ asset(template(true) . 'css/meanmenu.css')}}">
+<link rel="stylesheet" href="{{ asset(template(true) . 'css/duration-pricing.css')}}">
 <link rel="stylesheet" href="{{ asset(template(true) . 'css/style.css')}}">
 
 <script src="{{ asset(template(true) . '/js/jquery-3.7.1.min.js')}}"></script>

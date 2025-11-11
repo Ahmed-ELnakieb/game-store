@@ -59,22 +59,55 @@ class CartController extends Controller
             return response()->json(['status' => false, 'message' => 'Service not found']);
         }
 
+        // Handle pricing if provided
+        $pricingId = $request->pricingId ?? null;
+        $durationId = $request->durationId ?? null;
+        $price = $service->price;
+        $actualPrice = showActualPrice($service);
+        $discount = $service->discount;
+        $discountType = $service->discount_type;
+        $durationName = '';
+
+        if ($pricingId) {
+            $pricing = \App\Models\ServicePricing::where('id', $pricingId)
+                ->where('card_service_id', $service->id)
+                ->where('status', 1)
+                ->with('duration')
+                ->first();
+
+            if (!$pricing) {
+                return response()->json(['status' => false, 'message' => 'Pricing not found']);
+            }
+
+            if ($pricing->stock_count < $request->quantity) {
+                return response()->json(['status' => false, 'message' => 'Insufficient stock']);
+            }
+
+            $price = $pricing->price;
+            $actualPrice = $pricing->getFinalPrice();
+            $discount = $pricing->discount;
+            $discountType = $pricing->discount_type;
+            $durationName = $pricing->duration->name ?? '';
+        }
+
         $cart = session()->get('cart', []);
-        $serviceId = $service->id;
+        $cartKey = $pricingId ? $service->id . '_' . $pricingId : $service->id;
         $quantity = $request->quantity;
 
-        if (isset($cart[$serviceId])) {
-            $cart[$serviceId]['quantity'] += $quantity;
+        if (isset($cart[$cartKey])) {
+            $cart[$cartKey]['quantity'] += $quantity;
         } else {
-            $cart[$serviceId] = [
-                "id" => $serviceId,
-                "name" => $service->name,
+            $cart[$cartKey] = [
+                "id" => $service->id,
+                "pricingId" => $pricingId,
+                "durationId" => $durationId,
+                "name" => $service->name . ($durationName ? ' - ' . $durationName : ''),
                 "image" => $service->imagePath(),
                 "quantity" => $quantity,
-                "price" => $service->price,
-                "actualPrice" => showActualPrice($service),
-                "discount" => $service->discount,
-                "discountType" => $service->discount_type,
+                "price" => $price,
+                "actualPrice" => $actualPrice,
+                "discount" => $discount,
+                "discountType" => $discountType,
             ];
         }
 

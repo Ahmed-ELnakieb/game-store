@@ -6,14 +6,14 @@
                   enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h3>@lang('Create Service')</h3>
+                    <h3>@lang('Add Hack Type')</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <label class="form-label">@lang('Name')</label>
+                        <label class="form-label">@lang('Hack Name')</label>
                         <div class="col-md-12">
-                            <input type="text" name="name" placeholder="@lang('eg. PUBG M 60 UC Code')"
+                            <input type="text" name="name" placeholder="@lang('eg. Aimbot, Wallhack, ESP')"
                                    class="form-control" value="{{old('name')}}" required>
                             @error("name")
                             <span class="invalid-feedback d-block">{{ $message }}</span>
@@ -108,14 +108,14 @@
                   enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h3>@lang('Update Service')</h3>
+                    <h3>@lang('Update Hack Type')</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <label class="form-label">@lang('Name')</label>
+                        <label class="form-label">@lang('Hack Name')</label>
                         <div class="col-md-12">
-                            <input type="text" name="name" placeholder="@lang('eg. Weekly Membership')"
+                            <input type="text" name="name" placeholder="@lang('eg. Aimbot, Wallhack, ESP')"
                                    class="form-control editName" value="" required>
                             @error("name")
                             <span class="invalid-feedback d-block">{{ $message }}</span>

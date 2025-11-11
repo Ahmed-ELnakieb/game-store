@@ -44,25 +44,38 @@ class CardService extends Model
         return $this->morphMany(Code::class, 'codeable')->where('status', 1);
     }
 
-    public function setImageAttribute($image)
+    public function pricings()
     {
-        if ($image) {
-            $uploadedImage = $this->fileUpload($image, config('filelocation.cardService.path'), null, config('filelocation.cardService.size'), 'webp', 60);
-            if ($uploadedImage) {
-                $this->attributes['image'] = $uploadedImage['path'];
-                $this->attributes['image_driver'] = $uploadedImage['driver'];
-            }
-        }
+        return $this->hasMany(ServicePricing::class, 'card_service_id');
     }
+
+    public function activePricings()
+    {
+        return $this->pricings()->where('status', 1)->with('duration')->orderBy('price', 'asc');
+    }
+
+    public function availableDurations()
+    {
+        return $this->activePricings()->get();
+    }
+
+    // Image upload is now handled directly in the controller
+    // No mutator needed - keeps things simple and predictable
 
     public function getImagePathAttribute()
     {
-        return getFile($this->image_driver, $this->image);
+        if ($this->image) {
+            return asset('assets/upload/' . $this->image);
+        }
+        return asset('assets/upload/default.png');
     }
 
     public function imagePath()
     {
-        return getFile($this->image_driver, $this->image);
+        if ($this->image) {
+            return asset('assets/upload/' . $this->image);
+        }
+        return asset('assets/upload/default.png');
     }
 
     public function getDiscount()

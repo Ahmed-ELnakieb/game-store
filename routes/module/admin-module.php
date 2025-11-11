@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\Module\TopUpServiceController;
 use App\Http\Controllers\Admin\Module\TopUpOrderController;
 use App\Http\Controllers\Admin\Module\CardController;
 use App\Http\Controllers\Admin\Module\CardServiceController;
+use App\Http\Controllers\Admin\Module\ServicePricingController;
 use App\Http\Controllers\Admin\Module\CardServiceCodeController;
 use App\Http\Controllers\Admin\Module\CardOrderController;
 use App\Http\Controllers\Admin\Module\ReviewController;
@@ -115,6 +116,16 @@ Route::group(['prefix' => $adminPrefix, 'as' => 'admin.'], function () {
                     Route::get('export', 'serviceExport')->name('export');
                     Route::get('sample', 'serviceSample')->name('sample');
                     Route::post('import', 'serviceImport')->name('import');
+                });
+            });
+
+            Route::controller(ServicePricingController::class)->group(function () {
+                Route::group(['prefix' => 'service/pricing', 'as' => 'service.pricing'], function () {
+                    Route::get('/', 'index')->name('');
+                    Route::post('store', 'store')->name('.store');
+                    Route::post('update/{id}', 'update')->name('.update');
+                    Route::delete('delete/{id}', 'destroy')->name('.delete');
+                    Route::get('status-change/{id}', 'statusChange')->name('.statusChange');
                 });
             });
 

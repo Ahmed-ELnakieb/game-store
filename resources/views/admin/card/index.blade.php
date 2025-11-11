@@ -1,14 +1,14 @@
 @extends('admin.layouts.app')
-@section('page_title','Card')
+@section('page_title','Games')
 @section('content')
     <div class="content container-fluid">
-        <x-page-header menu="Cards"  :statBtn="true"/>
+        <x-page-header menu="Games"  :statBtn="true"/>
 
         <div class="row d-none" id="statsSection">
             <div class="col-sm-6 col-lg-3 mb-3 mb-lg-5">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2">@lang("Active Card")</h6>
+                        <h6 class="card-subtitle mb-2">@lang("Active Games")</h6>
                         <div class="row align-items-center gx-2">
                             <div class="col">
                                 <span

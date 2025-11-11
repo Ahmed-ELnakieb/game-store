@@ -64,7 +64,19 @@ class Card extends Model
     {
         $lowPriceData = \Cache::get('lowPriceData_' . $this->id);
         if (!$lowPriceData) {
-            $lowPriceData = $this->activeServices->sortBy('price')->first() ?? new CardService();
+            // Get service with lowest pricing
+            $service = $this->activeServices()
+                ->with(['activePricings' => function($query) {
+                    $query->orderBy('price', 'asc')->limit(1);
+                }])
+                ->get()
+                ->sortBy(function($service) {
+                    $pricing = $service->activePricings->first();
+                    return $pricing ? $pricing->getFinalPrice() : PHP_INT_MAX;
+                })
+                ->first();
+            
+            $lowPriceData = $service ?? new CardService();
             \Cache::put('lowPriceData_' . $this->id, $lowPriceData);
         }
         return $lowPriceData;

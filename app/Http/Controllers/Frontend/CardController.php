@@ -82,7 +82,12 @@ class CardController extends Controller
 
     public function cardDetails($slug = null)
     {
-        $data['card'] = Card::with(['activeServices', 'activeServices.activeCodes'])->where(['status' => 1, 'slug' => $slug])->firstOrFail();
+        $data['card'] = Card::with([
+            'activeServices', 
+            'activeServices.activeCodes',
+            'activeServices.activePricings',
+            'activeServices.activePricings.duration'
+        ])->where(['status' => 1, 'slug' => $slug])->firstOrFail();
 
         $data['relatedCards'] = Card::select(['id', 'name', 'status', 'image', 'region', 'slug'])->where('id', '!=', $data['card']->id)
             ->where('status', 1)->where('name', 'LIKE', '%' . $data['card']->name . '%')->take(6)->get();
@@ -103,11 +108,38 @@ class CardController extends Controller
             return response()->json(['status' => false, 'message' => 'Service not found']);
         }
 
+        // Validate pricing if provided
+        if ($request->has('pricingId')) {
+            $pricing = \App\Models\ServicePricing::where('id', $request->pricingId)
+                ->where('card_service_id', $service->id)
+                ->where('status', 1)
+                ->first();
+
+            if (!$pricing) {
+                return response()->json(['status' => false, 'message' => 'Pricing not found']);
+            }
+
+            if ($pricing->stock_count < $request->quantity) {
+                return response()->json(['status' => false, 'message' => 'Insufficient stock']);
+            }
+        }
+
         DB::beginTransaction();
         try {
             $quantity = $request->quantity;
-            $totalAmount = showActualPrice($service) * $quantity;
-            $quantities[$service->id] = $quantity;
+            
+            // Calculate price based on pricing if available
+            if (isset($pricing)) {
+                $totalAmount = $pricing->getFinalPrice() * $quantity;
+            } else {
+                $totalAmount = showActualPrice($service) * $quantity;
+            }
+            
+            $quantities[$service->id] = [
+                'quantity' => $quantity,
+                'pricing_id' => $request->pricingId ?? null,
+                'duration_id' => $request->durationId ?? null,
+            ];
 
             $order = $this->orderCreate($totalAmount, 'card');
             $this->orderDetailsCreate($order, $service, CardService::class, $quantities);
@@ -116,7 +148,7 @@ class CardController extends Controller
             return response()->json(['status' => true, 'route' => route('card.user.order', ['utr' => $order->utr])]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status' => false, 'message' => 'Something went wrong']);
+            return response()->json(['status' => false, 'message' => 'Something went wrong: ' . $e->getMessage()]);
         }
     }
 
@@ -131,7 +163,11 @@ class CardController extends Controller
             if (!empty($cartItems)) {
                 foreach ($cartItems as $cart) {
                     $ids[] = $cart['id'];
-                    $quantities[$cart['id']] = $cart['quantity'];
+                    $quantities[$cart['id']] = [
+                        'quantity' => $cart['quantity'],
+                        'pricing_id' => $cart['pricingId'] ?? null,
+                        'duration_id' => $cart['durationId'] ?? null,
+                    ];
                 }
             }
 
@@ -143,7 +179,20 @@ class CardController extends Controller
             if (!empty($services)) {
                 foreach ($services as $service) {
                     if (isset($quantities[$service->id])) {
-                        $totalAmount += (showActualPrice($service) * $quantities[$service->id]);
+                        $quantityData = $quantities[$service->id];
+                        $qty = $quantityData['quantity'];
+                        
+                        // Calculate price based on pricing if available
+                        if (isset($quantityData['pricing_id']) && $quantityData['pricing_id']) {
+                            $pricing = \App\Models\ServicePricing::find($quantityData['pricing_id']);
+                            if ($pricing) {
+                                $totalAmount += ($pricing->getFinalPrice() * $qty);
+                            } else {
+                                $totalAmount += (showActualPrice($service) * $qty);
+                            }
+                        } else {
+                            $totalAmount += (showActualPrice($service) * $qty);
+                        }
                     }
                 }
             }
@@ -156,7 +205,7 @@ class CardController extends Controller
             return redirect()->route('card.user.order', ['utr' => $order->utr]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Something went wrong');
+            return back()->with('error', 'Something went wrong: ' . $e->getMessage());
         }
     }
 

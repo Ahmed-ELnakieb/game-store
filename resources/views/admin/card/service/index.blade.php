@@ -1,15 +1,15 @@
 @extends('admin.layouts.app')
-@section('page_title','Top Up Service')
+@section('page_title', $card->name . ' - Hack Types')
 @section('content')
     <div class="content container-fluid">
 
-        <x-page-header menu="`{{$card->name}}` Service " pagetitle="`{{$card->name}}` Service " :statBtn="true" exportImport/>
+        <x-page-header menu="`{{$card->name}}` Hacks" pagetitle="`{{$card->name}}` - Hack Types" :statBtn="true" exportImport/>
 
         <div class="row d-none" id="statsSection">
             <div class="col-sm-6 col-lg-3 mb-3 mb-lg-5">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2">@lang("Active Service")</h6>
+                        <h6 class="card-subtitle mb-2">@lang("Active Hacks")</h6>
                         <div class="row align-items-center gx-2">
                             <div class="col">
                                 <span
@@ -30,7 +30,7 @@
             <div class="col-sm-6 col-lg-3 mb-3 mb-lg-5">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2">@lang("InActive Service")</h6>
+                        <h6 class="card-subtitle mb-2">@lang("Inactive Hacks")</h6>
                         <div class="row align-items-center gx-2">
                             <div class="col">
                                 <span
@@ -51,7 +51,7 @@
             <div class="col-sm-6 col-lg-3 mb-3 mb-lg-5">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2">@lang("Today Created Service")</h6>
+                        <h6 class="card-subtitle mb-2">@lang("Today Created Hacks")</h6>
 
                         <div class="row align-items-center gx-2">
                             <div class="col">
@@ -73,7 +73,7 @@
             <div class="col-sm-6 col-lg-3 mb-3 mb-lg-5">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2">@lang("This Month Created Service")</h6>
+                        <h6 class="card-subtitle mb-2">@lang("This Month Created Hacks")</h6>
                         <div class="row align-items-center gx-2">
                             <div class="col">
                                 <span
@@ -101,7 +101,7 @@
                                 </div>
                                 <input type="search" id="datatableSearch"
                                        class="search form-control form-control-sm"
-                                       placeholder="@lang('Search Service')"
+                                       placeholder="@lang('Search Hacks')"
                                        aria-label="@lang('Search Service')"
                                        autocomplete="off">
                                 <a class="input-group-append input-group-text" href="javascript:void(0)">
@@ -371,7 +371,21 @@
             $('.editPrice').val($(this).data('price'));
             $('.editDiscount').val($(this).data('discount'));
             $('.editDiscountType').val($(this).data('discount_type'));
-            $('.editImage').attr('src', $(this).data('image'));
+            // Add timestamp to image URL to prevent caching
+            let imageUrl = $(this).data('image');
+            if (imageUrl && !imageUrl.includes('?v=')) {
+                imageUrl += '?v=' + new Date().getTime();
+            }
+            $('.editImage').attr('src', imageUrl);
+        });
+
+        // Reload page after modal closes if form was submitted
+        $('#editModal').on('hidden.bs.modal', function () {
+            // Check if there's a success message (form was submitted)
+            if ($('.alert-success').length > 0) {
+                // Force reload to show updated image
+                location.reload(true);
+            }
         });
 
 
