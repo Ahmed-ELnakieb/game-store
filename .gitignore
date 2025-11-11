@@ -15,7 +15,10 @@
 /vendor
 
 # Build & Cache
-/public
+/public/hot
+/public/storage
+/public/assets/upload/*
+!/public/assets/upload/.gitkeep
 npm-debug.log
 yarn-error.log
 
