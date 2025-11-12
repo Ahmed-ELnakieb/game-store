@@ -144,6 +144,7 @@ class CardServiceCodeController extends Controller
                         data-id="' . $item->id . '"
                         data-passcode="' . $item->passcode . '"
                         data-duration-id="' . $item->duration_id . '"
+                        data-status="' . $item->status . '"
                         data-expiry-message="' . htmlspecialchars($item->expiry_message ?? '') . '"
                         data-expires-at="' . $expiresAt . '"
                         data-time-left="' . $timeLeft . '"
@@ -271,6 +272,7 @@ class CardServiceCodeController extends Controller
         $request->validate([
             'passcode' => 'required|string',
             'duration_id' => 'nullable|exists:service_durations,id',
+            'status' => 'required|in:0,1',
             'expiry_message' => 'nullable|string',
             'time_action' => 'nullable|in:add,subtract,set',
             'modify_days' => 'nullable|integer|min:0',
@@ -282,6 +284,7 @@ class CardServiceCodeController extends Controller
             $code = Code::findOrFail($id);
             $code->passcode = $request->passcode;
             $code->duration_id = $request->duration_id;
+            $code->status = $request->status;
             $code->expiry_message = $request->expiry_message;
             
             // Modify expiration if requested and code is activated

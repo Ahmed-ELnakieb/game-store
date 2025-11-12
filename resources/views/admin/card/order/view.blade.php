@@ -8,7 +8,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb breadcrumb-no-gutter">
                             <li class="breadcrumb-item"><a class="breadcrumb-link"
-                                                           href="{{route('admin.orderCard.view')}}">@lang('Orders')</a>
+                                                           href="{{route('admin.orderCard.list', ['type' => 'all'])}}">@lang('Orders')</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">@lang('Order details')</li>
                         </ol>

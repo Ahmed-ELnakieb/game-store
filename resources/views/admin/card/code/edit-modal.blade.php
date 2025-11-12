@@ -28,6 +28,15 @@
                     </div>
 
                     <div class="mb-3">
+                        <label class="form-label">@lang('Status') <span class="text-danger">*</span></label>
+                        <select name="status" id="edit_status" class="form-select" required>
+                            <option value="1">@lang('Available')</option>
+                            <option value="0">@lang('Sold')</option>
+                        </select>
+                        <small class="text-muted">@lang('Change status to Available/Sold')</small>
+                    </div>
+
+                    <div class="mb-3">
                         <label class="form-label">@lang('Expiry Message')</label>
                         <textarea name="expiry_message" id="edit_expiry_message" class="form-control" rows="3" placeholder="@lang('Message shown to user when key expires...')"></textarea>
                         <small class="text-muted">@lang('This message will be displayed to the user when their key expires. Leave empty for default message.')</small>

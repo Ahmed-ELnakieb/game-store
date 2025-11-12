@@ -428,6 +428,7 @@
             const id = $(this).data('id');
             const passcode = $(this).data('passcode');
             const durationId = $(this).data('duration-id');
+            const status = $(this).data('status');
             const expiryMessage = $(this).data('expiry-message');
             const expiresAt = $(this).data('expires-at');
             const timeLeft = $(this).data('time-left');
@@ -435,6 +436,7 @@
             $('#editCodeForm').attr('action', "{{ route('admin.cardServiceCode.update', '') }}/" + id);
             $('#edit_passcode').val(passcode);
             $('#edit_duration_id').val(durationId);
+            $('#edit_status').val(status);
             $('#edit_expiry_message').val(expiryMessage || '');
             $('#edit_modify_days').val('0');
             $('#edit_modify_hours').val('0');
