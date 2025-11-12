@@ -92,16 +92,41 @@ class ManualGatewayController extends Controller
             }
         }
 
+        // Handle instruction images upload
+        $instructionImages = [];
+        if ($request->hasFile('instruction_images')) {
+            foreach ($request->file('instruction_images') as $instructionImage) {
+                if ($instructionImage) {
+                    try {
+                        $uploaded = $this->fileUpload($instructionImage, config('filelocation.gateway.path'), null, null, 'webp', 60);
+                        if ($uploaded) {
+                            $instructionImages[] = $uploaded['path'];
+                        }
+                    } catch (\Exception $exp) {
+                        // Continue with other images if one fails
+                    }
+                }
+            }
+        }
+
         $request->validate($rules, $customMessages);
 
         $collection = collect($request->receivable_currencies);
         $supportedCurrency = $collection->pluck('currency')->all();
+        
+        // Prepare extra parameters with instruction images
+        $extraParameters = [];
+        if (!empty($instructionImages)) {
+            $extraParameters['instruction_images'] = $instructionImages;
+        }
+        
         $response = Gateway::create([
             'name' => $request->name,
             'code' => Str::slug($request->name),
             'supported_currency' => $supportedCurrency,
             'receivable_currencies' => $request->receivable_currencies,
             'parameters' => $input_form,
+            'extra_parameters' => !empty($extraParameters) ? json_encode($extraParameters) : null,
             'image' => $gatewayImage ?? null,
             'driver' => $driver ?? null,
             'status' => $request->status,
@@ -203,14 +228,52 @@ class ManualGatewayController extends Controller
             }
         }
 
+        // Handle instruction images upload
+        $existingExtraParams = json_decode($gateway->extra_parameters ?? '{}', true);
+        $existingInstructionImages = $existingExtraParams['instruction_images'] ?? [];
+        $instructionImages = $existingInstructionImages;
+        
+        if ($request->hasFile('instruction_images')) {
+            $instructionImages = [];
+            foreach ($request->file('instruction_images') as $index => $instructionImage) {
+                if ($instructionImage) {
+                    try {
+                        // Delete old image if exists
+                        $oldImage = $existingInstructionImages[$index] ?? null;
+                        $uploaded = $this->fileUpload($instructionImage, config('filelocation.gateway.path'), null, null, 'webp', 60, $oldImage, $gateway->driver);
+                        if ($uploaded) {
+                            $instructionImages[] = $uploaded['path'];
+                        }
+                    } catch (\Exception $exp) {
+                        // Keep existing image if upload fails
+                        if (isset($existingInstructionImages[$index])) {
+                            $instructionImages[] = $existingInstructionImages[$index];
+                        }
+                    }
+                } else {
+                    // Keep existing image if no new upload
+                    if (isset($existingInstructionImages[$index])) {
+                        $instructionImages[] = $existingInstructionImages[$index];
+                    }
+                }
+            }
+        }
+
         $collection = collect($request->receivable_currencies);
         $supportedCurrency = $collection->pluck('currency')->all();
+
+        // Prepare extra parameters with instruction images
+        $extraParameters = $existingExtraParams;
+        if (!empty($instructionImages)) {
+            $extraParameters['instruction_images'] = $instructionImages;
+        }
 
         $response = $gateway->update([
             'name' => $request->name,
             'supported_currency' => $supportedCurrency,
             'receivable_currencies' => $request->receivable_currencies,
             'parameters' => $input_form,
+            'extra_parameters' => !empty($extraParameters) ? json_encode($extraParameters) : $gateway->extra_parameters,
             'image' => $gatewayImage ?? $gateway->image,
             'driver' => $driver ?? $gateway->driver,
             'status' => $request->manual_gateway_status,

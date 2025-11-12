@@ -111,6 +111,69 @@
                                     </div>
                                 </div>
 
+                                <div class="row mb-5">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">@lang('Instruction Images') <small class="text-muted">(@lang('Optional'))</small></h4>
+                                                <p class="text-muted mb-0">@lang('Upload multiple images to guide users through the payment process')</p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="instructionImagesContainer">
+                                                    <div class="row g-3">
+                                                        @php
+                                                            $instructionImages = json_decode($method->extra_parameters ?? '{}', true);
+                                                            $instructionImages = $instructionImages['instruction_images'] ?? [];
+                                                        @endphp
+                                                        @for($i = 1; $i <= 4; $i++)
+                                                            <div class="col-md-3">
+                                                                <label class="form-check form-check-dashed" for="instructionImage{{$i}}">
+                                                                    @php
+                                                                        $existingImage = $instructionImages[$i-1] ?? null;
+                                                                        $imageUrl = $existingImage ? getFile($method->driver, $existingImage, true) : asset('assets/admin/img/oc-browse-file.svg');
+                                                                    @endphp
+                                                                    <img id="instructionImg{{$i}}"
+                                                                         class="avatar avatar-xl avatar-4x3 avatar-centered h-100 mb-2"
+                                                                         src="{{ $imageUrl }}"
+                                                                         alt="Image {{$i}}" data-hs-theme-appearance="default">
+                                                                    <img id="instructionImg{{$i}}"
+                                                                         class="avatar avatar-xl avatar-4x3 avatar-centered h-100 mb-2"
+                                                                         src="{{ $existingImage ? getFile($method->driver, $existingImage, true) : asset('assets/admin/img/oc-browse-file-light.svg') }}"
+                                                                         alt="Image {{$i}}" data-hs-theme-appearance="dark">
+                                                                    <span class="d-block">@lang("Image {{$i}}")</span>
+                                                                    <input type="file" class="js-file-attach form-check-input" name="instruction_images[]"
+                                                                           id="instructionImage{{$i}}" data-hs-file-attach-options='{
+                                                                              "textTarget": "#instructionImg{{$i}}",
+                                                                              "mode": "image",
+                                                                              "targetAttr": "src",
+                                                                              "allowTypes": [".png", ".jpeg", ".jpg"]
+                                                                           }'>
+                                                                    @if($existingImage)
+                                                                        <input type="hidden" name="existing_instruction_images[]" value="{{ $existingImage }}">
+                                                                    @endif
+                                                                </label>
+                                                            </div>
+                                                        @endfor
+                                                    </div>
+                                                </div>
+                                                @error('instruction_images')
+                                                <span class="invalid-feedback d-block">{{ $message }}</span>
+                                                @enderror
+                                                <div class="alert alert-soft-info mt-3" role="alert">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0">
+                                                            <i class="bi-info-circle"></i>
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-2">
+                                                            @lang('These images will be displayed to users as step-by-step payment instructions. You can upload up to 4 images.')
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="card mb-3 mb-lg-5">
                                     <div class="card-header card-header-content-sm-between">
                                         <h4 class="card-header-title mb-2 mb-sm-0">@lang("Payment Information")</h4>

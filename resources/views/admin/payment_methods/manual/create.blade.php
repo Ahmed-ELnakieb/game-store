@@ -107,6 +107,145 @@
                                     </div>
                                 </div>
 
+                                <div class="row mb-5">
+                                    <div class="col-lg-6 mb-4 mb-lg-0">
+                                        <div class="card h-100">
+                                            <div class="card-header">
+                                                <h4 class="card-title mb-0">@lang('Payment Description Details')</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="alert alert-soft-primary" role="alert">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0">
+                                                            <i class="bi-info-circle"></i>
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-2">
+                                                            <p class="mb-0">@lang('The payment description above will be shown to users when they select this payment method.')</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <h5 class="mb-2">@lang('Tips for a good description:')</h5>
+                                                    <ul class="list-unstyled">
+                                                        <li class="mb-2"><i class="bi-check-circle-fill text-success me-2"></i>@lang('Be clear and concise')</li>
+                                                        <li class="mb-2"><i class="bi-check-circle-fill text-success me-2"></i>@lang('Include payment processing time')</li>
+                                                        <li class="mb-2"><i class="bi-check-circle-fill text-success me-2"></i>@lang('Mention any special requirements')</li>
+                                                        <li class="mb-2"><i class="bi-check-circle-fill text-success me-2"></i>@lang('Add contact info for support')</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="card h-100">
+                                            <div class="card-header">
+                                                <h4 class="card-title">@lang('Instruction Images') <small class="text-muted">(@lang('Optional'))</small></h4>
+                                                <p class="text-muted mb-0 small">@lang('Upload images to guide users through the payment process')</p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="instructionImagesContainer">
+                                                    <div class="row g-3">
+                                                        <div class="col-6">
+                                                            <label class="form-check form-check-dashed w-100" for="instructionImage1">
+                                                                <img id="instructionImg1"
+                                                                     class="avatar avatar-xl avatar-4x3 avatar-centered h-100 mb-2"
+                                                                     src="{{ asset('assets/admin/img/oc-browse-file.svg') }}"
+                                                                     alt="Image 1" data-hs-theme-appearance="default">
+                                                                <img id="instructionImg1"
+                                                                     class="avatar avatar-xl avatar-4x3 avatar-centered h-100 mb-2"
+                                                                     src="{{ asset('assets/admin/img/oc-browse-file-light.svg') }}"
+                                                                     alt="Image 1" data-hs-theme-appearance="dark">
+                                                                <span class="d-block small">@lang("Step 1")</span>
+                                                                <input type="file" class="js-file-attach form-check-input" name="instruction_images[]"
+                                                                       id="instructionImage1" data-hs-file-attach-options='{
+                                                                          "textTarget": "#instructionImg1",
+                                                                          "mode": "image",
+                                                                          "targetAttr": "src",
+                                                                          "allowTypes": [".png", ".jpeg", ".jpg"]
+                                                                       }'>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label class="form-check form-check-dashed w-100" for="instructionImage2">
+                                                                <img id="instructionImg2"
+                                                                     class="avatar avatar-xl avatar-4x3 avatar-centered h-100 mb-2"
+                                                                     src="{{ asset('assets/admin/img/oc-browse-file.svg') }}"
+                                                                     alt="Image 2" data-hs-theme-appearance="default">
+                                                                <img id="instructionImg2"
+                                                                     class="avatar avatar-xl avatar-4x3 avatar-centered h-100 mb-2"
+                                                                     src="{{ asset('assets/admin/img/oc-browse-file-light.svg') }}"
+                                                                     alt="Image 2" data-hs-theme-appearance="dark">
+                                                                <span class="d-block small">@lang("Step 2")</span>
+                                                                <input type="file" class="js-file-attach form-check-input" name="instruction_images[]"
+                                                                       id="instructionImage2" data-hs-file-attach-options='{
+                                                                          "textTarget": "#instructionImg2",
+                                                                          "mode": "image",
+                                                                          "targetAttr": "src",
+                                                                          "allowTypes": [".png", ".jpeg", ".jpg"]
+                                                                       }'>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label class="form-check form-check-dashed w-100" for="instructionImage3">
+                                                                <img id="instructionImg3"
+                                                                     class="avatar avatar-xl avatar-4x3 avatar-centered h-100 mb-2"
+                                                                     src="{{ asset('assets/admin/img/oc-browse-file.svg') }}"
+                                                                     alt="Image 3" data-hs-theme-appearance="default">
+                                                                <img id="instructionImg3"
+                                                                     class="avatar avatar-xl avatar-4x3 avatar-centered h-100 mb-2"
+                                                                     src="{{ asset('assets/admin/img/oc-browse-file-light.svg') }}"
+                                                                     alt="Image 3" data-hs-theme-appearance="dark">
+                                                                <span class="d-block small">@lang("Step 3")</span>
+                                                                <input type="file" class="js-file-attach form-check-input" name="instruction_images[]"
+                                                                       id="instructionImage3" data-hs-file-attach-options='{
+                                                                          "textTarget": "#instructionImg3",
+                                                                          "mode": "image",
+                                                                          "targetAttr": "src",
+                                                                          "allowTypes": [".png", ".jpeg", ".jpg"]
+                                                                       }'>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label class="form-check form-check-dashed w-100" for="instructionImage4">
+                                                                <img id="instructionImg4"
+                                                                     class="avatar avatar-xl avatar-4x3 avatar-centered h-100 mb-2"
+                                                                     src="{{ asset('assets/admin/img/oc-browse-file.svg') }}"
+                                                                     alt="Image 4" data-hs-theme-appearance="default">
+                                                                <img id="instructionImg4"
+                                                                     class="avatar avatar-xl avatar-4x3 avatar-centered h-100 mb-2"
+                                                                     src="{{ asset('assets/admin/img/oc-browse-file-light.svg') }}"
+                                                                     alt="Image 4" data-hs-theme-appearance="dark">
+                                                                <span class="d-block small">@lang("Step 4")</span>
+                                                                <input type="file" class="js-file-attach form-check-input" name="instruction_images[]"
+                                                                       id="instructionImage4" data-hs-file-attach-options='{
+                                                                          "textTarget": "#instructionImg4",
+                                                                          "mode": "image",
+                                                                          "targetAttr": "src",
+                                                                          "allowTypes": [".png", ".jpeg", ".jpg"]
+                                                                       }'>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @error('instruction_images')
+                                                <span class="invalid-feedback d-block">{{ $message }}</span>
+                                                @enderror
+                                                <div class="alert alert-soft-info mt-3 mb-0" role="alert">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0">
+                                                            <i class="bi-lightbulb"></i>
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-2">
+                                                            <small>@lang('Upload up to 4 step-by-step images to help users complete their payment successfully.')</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="js-add-field card mb-3 mb-lg-5">
                                     <div class="card-header card-header-content-sm-between">
                                         <h4 class="card-header-title mb-2 mb-sm-0">@lang("Payment Information")</h4>
