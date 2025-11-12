@@ -151,8 +151,8 @@
                                data-bs-target="#navbarVerticalCardOrderMenu"
                                aria-expanded="false"
                                aria-controls="navbarVerticalCardOrderMenu">
-                                <i class="fa-light fas fa-vr-cardboard nav-icon nav-icon"></i>
-                                <span class="nav-link-title">@lang("Card Order")</span>
+                                <i class="fa-light fas fa-shopping-cart nav-icon"></i>
+                                <span class="nav-link-title">@lang("Orders")</span>
                             </a>
                             <div id="navbarVerticalCardOrderMenu"
                                  class="nav-collapse collapse {{ menuActive(['admin.orderCard.list','admin.orderCard.view'], 2) }}"
