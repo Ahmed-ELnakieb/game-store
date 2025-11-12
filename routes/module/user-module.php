@@ -5,6 +5,7 @@ use App\Http\Controllers\User\SellPostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\ShopController;
 
 $basicControl = basicControl();
 
@@ -17,6 +18,17 @@ Route::group(['middleware' => ['maintenanceMode']], function () use ($basicContr
 
         Route::controller(DashboardController::class)->group(function () {
             Route::get('get-order/movement', 'getOrderMovement')->name('getOrderMovement');
+        });
+
+        Route::controller(ShopController::class)->middleware('module:card')->group(function () {
+            Route::get('shop', 'index')->name('shop');
+            Route::get('shop/{slug}', 'details')->name('shop.details');
+        });
+
+        Route::controller(\App\Http\Controllers\User\DownloadController::class)->group(function () {
+            Route::get('downloads', 'index')->name('downloads');
+            Route::get('downloads/access/{id}', 'access')->name('downloads.access');
+            Route::post('downloads/authenticate/{id}', 'authenticate')->name('downloads.authenticate');
         });
 
         Route::controller(SellPostController::class)->middleware('module:sell_post')->group(function () {

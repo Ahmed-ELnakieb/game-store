@@ -10,7 +10,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ menuActive(['cards']) }}" href="{{ route('cards') }}" data-bs-toggle="tooltip" title="Buy Hacks">
+        <a class="nav-link {{ menuActive(['user.shop']) }}" href="{{ route('user.shop') }}" data-bs-toggle="tooltip" title="Shop Hacks">
             <i class="fa-regular fa-shopping-cart"></i>
         </a>
     </li>

@@ -261,5 +261,15 @@ Route::group(['prefix' => $adminPrefix, 'as' => 'admin.'], function () {
             });
         });
 
+        // Download Files Management
+        Route::controller(\App\Http\Controllers\Admin\DownloadFileController::class)->group(function () {
+            Route::group(['prefix' => 'download-files', 'as' => 'downloadFiles.'], function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('store', 'store')->name('store');
+                Route::post('update/{id}', 'update')->name('update');
+                Route::delete('delete/{id}', 'destroy')->name('destroy');
+            });
+        });
+
     });
 });

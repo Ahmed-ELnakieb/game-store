@@ -14,9 +14,15 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{menuActive('cards')}}" href="{{route('cards')}}">
+            <a class="nav-link {{menuActive('user.shop')}}" href="{{route('user.shop')}}">
                 <i class="fa-regular fa-shopping-cart"></i>
-                <span>@lang('Buy Hacks')</span>
+                <span>@lang('Shop Hacks')</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{menuActive('user.downloads')}}" href="{{route('user.downloads')}}">
+                <i class="fa-regular fa-download"></i>
+                <span>@lang('Download Files')</span>
             </a>
         </li>
         <li class="nav-item">

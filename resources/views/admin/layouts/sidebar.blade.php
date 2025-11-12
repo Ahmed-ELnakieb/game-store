@@ -172,6 +172,14 @@
                                 </a>
                             </div>
                         </div>
+
+                        <div class="nav-item">
+                            <a class="nav-link {{ menuActive(['admin.downloadFiles*']) }}"
+                               href="{{ route('admin.downloadFiles.index') }}" data-placement="left">
+                                <i class="fa-light fa-download nav-icon"></i>
+                                <span class="nav-link-title">@lang("Download Files")</span>
+                            </a>
+                        </div>
                     @endif
 
                     @if($basicControl->sell_post == 1)
