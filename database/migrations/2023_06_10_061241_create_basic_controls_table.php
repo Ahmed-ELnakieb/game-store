@@ -83,6 +83,8 @@ return new class extends Migration {
             $table->integer('payment_released')->default(7);
             $table->boolean('top_up')->default(1);
             $table->boolean('card')->default(1);
+            $table->boolean('auto_complete_orders')->default(1)->comment('Automatically complete orders after payment');
+            $table->boolean('use_queue_for_orders')->default(0)->comment('Use queue jobs for order processing (0=direct, 1=queue)');
             $table->string('app_color')->nullable();
             $table->string('app_version')->nullable();
             $table->string('app_build')->nullable();

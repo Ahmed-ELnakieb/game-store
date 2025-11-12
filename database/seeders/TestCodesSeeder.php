@@ -28,8 +28,8 @@ class TestCodesSeeder extends Seeder
             $this->command->info("Adding codes for: {$service->name}");
             
             foreach ($durations as $durationId => $prefix) {
-                // Random number of codes between 2 and 5
-                $count = rand(2, 5);
+                // Random number of codes between 1 and 2
+                $count = rand(1, 2);
                 
                 for ($i = 0; $i < $count; $i++) {
                     DB::table('codes')->insert([
@@ -44,7 +44,7 @@ class TestCodesSeeder extends Seeder
                     $totalAdded++;
                 }
                 
-                $this->command->info("  - Added {$count} codes for {$prefix}");
+                $this->command->info("  - Added {$count} code(s) for {$prefix}");
             }
         }
         

@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('download_files', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('card_id')->nullable()->constrained('cards')->onDelete('cascade');
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('file_url');
+            $table->string('auth_username')->nullable();
+            $table->string('auth_password')->nullable();
+            $table->boolean('requires_auth')->default(1);
             $table->string('file_type')->nullable(); // e.g., 'game', 'hack', 'tool', 'guide'
             $table->string('icon')->nullable(); // Font Awesome icon class
             $table->bigInteger('file_size')->nullable(); // in bytes
