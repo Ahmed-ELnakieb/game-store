@@ -182,7 +182,7 @@
                         </div>
                     @endif
 
-                    @if($basicControl->sell_post == 1)
+                    @if($basicControl->sell_post == 1 && adminAccessRoute('Sell Post Management'))
                         <span class="dropdown-header mt-2"> @lang("Sell Post")</span>
                         <small class="bi-three-dots nav-subtitle-replacer"></small>
                         <div class="nav-item">
@@ -328,43 +328,45 @@
                         </div>
                     @endif
 
-                    <span class="dropdown-header mt-2"> @lang('Kyc Management')</span>
-                    <small class="bi-three-dots nav-subtitle-replacer"></small>
-                    <div class="nav-item">
-                        <a class="nav-link {{ menuActive(['admin.kyc.form.list','admin.kyc.edit','admin.kyc.create']) }}"
-                           href="{{ route('admin.kyc.form.list') }}" data-placement="left">
-                            <i class="bi-stickies nav-icon"></i>
-                            <span class="nav-link-title">@lang('KYC Setting')</span>
-                        </a>
-                    </div>
-
-                    <div class="nav-item" {{ menuActive(['admin.kyc.list*','admin.kyc.view'], 3) }}>
-                        <a class="nav-link dropdown-toggle collapsed" href="#navbarVerticalKycRequestMenu"
-                           role="button"
-                           data-bs-toggle="collapse" data-bs-target="#navbarVerticalKycRequestMenu"
-                           aria-expanded="false"
-                           aria-controls="navbarVerticalKycRequestMenu">
-                            <i class="bi bi-person-lines-fill nav-icon"></i>
-                            <span class="nav-link-title">@lang("KYC Request")</span>
-                        </a>
-                        <div id="navbarVerticalKycRequestMenu"
-                             class="nav-collapse collapse {{ menuActive(['admin.kyc.list*','admin.kyc.view'], 2) }}"
-                             data-bs-parent="#navbarVerticalKycRequestMenu">
-
-                            <a class="nav-link {{ Request::is('admin/kyc/pending') ? 'active' : '' }}"
-                               href="{{ route('admin.kyc.list', 'pending') }}">
-                                @lang('Pending KYC')
-                            </a>
-                            <a class="nav-link {{ Request::is('admin/kyc/approve') ? 'active' : '' }}"
-                               href="{{ route('admin.kyc.list', 'approve') }}">
-                                @lang('Approved KYC')
-                            </a>
-                            <a class="nav-link {{ Request::is('admin/kyc/rejected') ? 'active' : '' }}"
-                               href="{{ route('admin.kyc.list', 'rejected') }}">
-                                @lang('Rejected KYC')
+                    @if(adminAccessRoute('KYC Management'))
+                        <span class="dropdown-header mt-2"> @lang('Kyc Management')</span>
+                        <small class="bi-three-dots nav-subtitle-replacer"></small>
+                        <div class="nav-item">
+                            <a class="nav-link {{ menuActive(['admin.kyc.form.list','admin.kyc.edit','admin.kyc.create']) }}"
+                               href="{{ route('admin.kyc.form.list') }}" data-placement="left">
+                                <i class="bi-stickies nav-icon"></i>
+                                <span class="nav-link-title">@lang('KYC Setting')</span>
                             </a>
                         </div>
-                    </div>
+
+                        <div class="nav-item" {{ menuActive(['admin.kyc.list*','admin.kyc.view'], 3) }}>
+                            <a class="nav-link dropdown-toggle collapsed" href="#navbarVerticalKycRequestMenu"
+                               role="button"
+                               data-bs-toggle="collapse" data-bs-target="#navbarVerticalKycRequestMenu"
+                               aria-expanded="false"
+                               aria-controls="navbarVerticalKycRequestMenu">
+                                <i class="bi bi-person-lines-fill nav-icon"></i>
+                                <span class="nav-link-title">@lang("KYC Request")</span>
+                            </a>
+                            <div id="navbarVerticalKycRequestMenu"
+                                 class="nav-collapse collapse {{ menuActive(['admin.kyc.list*','admin.kyc.view'], 2) }}"
+                                 data-bs-parent="#navbarVerticalKycRequestMenu">
+
+                                <a class="nav-link {{ Request::is('admin/kyc/pending') ? 'active' : '' }}"
+                                   href="{{ route('admin.kyc.list', 'pending') }}">
+                                    @lang('Pending KYC')
+                                </a>
+                                <a class="nav-link {{ Request::is('admin/kyc/approve') ? 'active' : '' }}"
+                                   href="{{ route('admin.kyc.list', 'approve') }}">
+                                    @lang('Approved KYC')
+                                </a>
+                                <a class="nav-link {{ Request::is('admin/kyc/rejected') ? 'active' : '' }}"
+                                   href="{{ route('admin.kyc.list', 'rejected') }}">
+                                    @lang('Rejected KYC')
+                                </a>
+                            </div>
+                        </div>
+                    @endif
 
                     @if(adminAccessRoute('User Management'))
                         <span class="dropdown-header mt-2"> @lang("User Panel")</span>
@@ -480,27 +482,29 @@
                         @endif
                     @endif
 
-                    <div class="nav-item">
-                        <a class="nav-link dropdown-toggle {{ menuActive(['admin.payout.method.list','admin.payout.method.create','admin.manual.method.edit','admin.payout.method.edit','admin.payout.withdraw.days'], 3) }}"
-                           href="#navbarVerticalWithdrawMenu"
-                           role="button"
-                           data-bs-toggle="collapse"
-                           data-bs-target="#navbarVerticalWithdrawMenu"
-                           aria-expanded="false"
-                           aria-controls="navbarVerticalWithdrawMenu">
-                            <i class="bi bi-wallet2 nav-icon"></i>
-                            <span class="nav-link-title">@lang('Withdraw Setting')</span>
-                        </a>
-                        <div id="navbarVerticalWithdrawMenu"
-                             class="nav-collapse collapse {{ menuActive(['admin.payout.method.list','admin.payout.method.create','admin.manual.method.edit','admin.payout.method.edit','admin.payout.withdraw.days'], 2) }}"
-                             data-bs-parent="#navbarVerticalWithdrawMenu">
-                            <a class="nav-link {{ menuActive(['admin.payout.method.list','admin.payout.method.create','admin.manual.method.edit','admin.payout.method.edit']) }}"
-                               href="{{ route('admin.payout.method.list') }}">@lang('Withdraw Method')</a>
+                    @if(adminAccessRoute('Payout Management'))
+                        <div class="nav-item">
+                            <a class="nav-link dropdown-toggle {{ menuActive(['admin.payout.method.list','admin.payout.method.create','admin.manual.method.edit','admin.payout.method.edit','admin.payout.withdraw.days'], 3) }}"
+                               href="#navbarVerticalWithdrawMenu"
+                               role="button"
+                               data-bs-toggle="collapse"
+                               data-bs-target="#navbarVerticalWithdrawMenu"
+                               aria-expanded="false"
+                               aria-controls="navbarVerticalWithdrawMenu">
+                                <i class="bi bi-wallet2 nav-icon"></i>
+                                <span class="nav-link-title">@lang('Withdraw Setting')</span>
+                            </a>
+                            <div id="navbarVerticalWithdrawMenu"
+                                 class="nav-collapse collapse {{ menuActive(['admin.payout.method.list','admin.payout.method.create','admin.manual.method.edit','admin.payout.method.edit','admin.payout.withdraw.days'], 2) }}"
+                                 data-bs-parent="#navbarVerticalWithdrawMenu">
+                                <a class="nav-link {{ menuActive(['admin.payout.method.list','admin.payout.method.create','admin.manual.method.edit','admin.payout.method.edit']) }}"
+                                   href="{{ route('admin.payout.method.list') }}">@lang('Withdraw Method')</a>
 
-                            <a class="nav-link  {{ menuActive(['admin.payout.withdraw.days']) }}"
-                               href="{{ route("admin.payout.withdraw.days") }}">@lang('Withdrawal Days Setup')</a>
+                                <a class="nav-link  {{ menuActive(['admin.payout.withdraw.days']) }}"
+                                   href="{{ route("admin.payout.withdraw.days") }}">@lang('Withdrawal Days Setup')</a>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
 
                     @if(adminAccessRoute('Website Management'))
