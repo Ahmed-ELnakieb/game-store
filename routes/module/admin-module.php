@@ -134,6 +134,9 @@ Route::group(['prefix' => $adminPrefix, 'as' => 'admin.'], function () {
                     Route::get('list', 'list')->name('list');
                     Route::get('search', 'search')->name('search');
                     Route::any('store', 'store')->name('store');
+                    Route::get('edit/{id}', 'edit')->name('edit');
+                    Route::post('update/{id}', 'update')->name('update');
+                    Route::get('delete/{id}', 'delete')->name('delete');
                     Route::post('multiple/status-change', 'multipleStatusChange')->name('multipleStatusChange');
                     Route::post('multiple-delete', 'multipleDelete')->name('multipleDelete');
 

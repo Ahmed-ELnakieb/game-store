@@ -103,6 +103,9 @@
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-white btn-icon btn-sm dropdown-toggle dropdown-toggle-empty" data-bs-toggle="dropdown"></button>
                                                     <div class="dropdown-menu dropdown-menu-end">
+                                                        <a class="dropdown-item" href="{{ route('admin.cardServiceCode.list') }}?service_id={{ $cardService->id }}&duration_id={{ $pricing->duration_id }}">
+                                                            <i class="bi-key dropdown-item-icon"></i> @lang('Manage Codes')
+                                                        </a>
                                                         <a class="dropdown-item" href="{{ route('admin.service.pricing.statusChange', $pricing->id) }}">
                                                             <i class="bi-toggle-{{ $pricing->status ? 'off' : 'on' }} dropdown-item-icon"></i>
                                                             @lang($pricing->status ? 'Deactivate' : 'Activate')

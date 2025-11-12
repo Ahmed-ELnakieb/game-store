@@ -2,7 +2,7 @@
      data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="{{route('admin.cardServiceCode.store').'?service_id='.$service->id}}" method="POST"
+            <form action="{{route('admin.cardServiceCode.store').'?service_id='.$service->id . ($selectedDuration ? '&duration_id='.$selectedDuration : '')}}" method="POST"
                   enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
@@ -10,6 +10,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    @if($durations->isNotEmpty())
+                    <div class="mb-3">
+                        <label class="form-label">@lang('Duration') <span class="text-danger">*</span></label>
+                        <select name="duration_id" class="form-select" required>
+                            <option value="">@lang('Select Duration')</option>
+                            @foreach($durations as $pricing)
+                                <option value="{{$pricing->duration_id}}" {{$selectedDuration == $pricing->duration_id ? 'selected' : ''}}>
+                                    {{$pricing->duration->name}} - {{ basicControl()->currency_symbol }}{{formatAmount($pricing->price)}}
+                                </option>
+                            @endforeach
+                        </select>
+                        <small class="text-muted">@lang('Select which duration these codes are for')</small>
+                    </div>
+                    @endif
+                    
                     <label class="form-label">@lang('Pass Code')</label>
                     <div class="row">
                         <div class="col-md-12">

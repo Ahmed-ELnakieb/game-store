@@ -92,11 +92,11 @@
 
         <div class="row">
             <div class="col-lg-4 mb-3 mb-lg-5">
-                <div class="card h-100">
+                <div class="card">
                     <div class="card-header card-header-content-between">
                         <h4 class="card-header-title">`{{$service->card?->name}}` @lang('Card Services')</h4>
                     </div>
-                    <div class="card-body card-body-height">
+                    <div class="card-body" style="max-height: none; height: auto; overflow-y: visible;">
                         <div class="tab-content" id="eventsTabContent">
                             <div class="tab-pane fade show active" id="this-week" role="tabpanel"
                                  aria-labelledby="this-week-tab">
@@ -120,6 +120,35 @@
                         </div>
                     </div>
                 </div>
+                
+                @if($durations->isNotEmpty())
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h4 class="card-header-title">@lang('Filter by Duration')</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <a class="list-group-item-action {{!$selectedDuration ? 'border-primary fw-bold' : ''}}"
+                                   href="{{route('admin.cardServiceCode.list') . '?service_id=' . $service->id}}">
+                                    <i class="bi-collection me-2"></i> @lang('All Durations')
+                                </a>
+                            </li>
+                            @foreach($durations as $pricing)
+                                <li class="list-group-item">
+                                    <a class="list-group-item-action {{$selectedDuration == $pricing->duration_id ? 'border-primary fw-bold' : ''}}"
+                                       href="{{route('admin.cardServiceCode.list') . '?service_id=' . $service->id . '&duration_id=' . $pricing->duration_id}}">
+                                        <i class="bi-clock me-2"></i> {{$pricing->duration->name}}
+                                        <span class="badge bg-soft-info text-info float-end">
+                                            {{ basicControl()->currency_symbol }}{{formatAmount($pricing->price)}}
+                                        </span>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+                @endif
             </div>
 
             <div class="col-lg-8">
@@ -199,6 +228,31 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @if($durations->isNotEmpty())
+                                                <div class="row">
+                                                    <div class="col-sm mb-4">
+                                                        <small class="text-cap text-body">@lang('Duration')</small>
+                                                        <div class="tom-select-custom">
+                                                            <select
+                                                                class="js-select form-select form-select-sm"
+                                                                id="filter_duration"
+                                                                data-hs-tom-select-options='{
+                                                                  "placeholder": "All Durations",
+                                                                  "searchInDropdown": false,
+                                                                  "hideSearch": true
+                                                                }'>
+                                                                <option value="">@lang('All Durations')</option>
+                                                                @foreach($durations as $pricing)
+                                                                    <option value="{{$pricing->duration_id}}" {{$selectedDuration == $pricing->duration_id ? 'selected' : ''}}>
+                                                                        {{$pricing->duration->name}}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endif
+
                                                 <div class="row">
                                                     <div class="col-sm mb-4">
                                                         <small class="text-cap text-body">@lang('Status')</small>
@@ -302,8 +356,11 @@
                                     </div>
                                 </th>
                                 <th scope="col">@lang('Pass Code')</th>
+                                <th scope="col">@lang('Duration')</th>
                                 <th scope="col">@lang('Status')</th>
-                                <th scope="col">@lang('Created At')</th>
+                                <th scope="col">@lang('Time Left')</th>
+                                <th scope="col">@lang('Created')</th>
+                                <th scope="col">@lang('Action')</th>
                             </tr>
                             </thead>
                         </table>
@@ -347,6 +404,8 @@
     @include('admin.delete-modal')
     @include('admin.card.code.create-modal')
     @include('admin.card.code.export-import-modal')
+    @include('admin.card.code.edit-modal')
+    @include('admin.card.code.delete-code-modal')
 @endsection
 
 @push('css-lib')
@@ -394,6 +453,58 @@
             $(this).closest('.row').remove();
         });
 
+        $(document).on('click', '.edit-code-btn', function () {
+            const id = $(this).data('id');
+            const passcode = $(this).data('passcode');
+            const durationId = $(this).data('duration-id');
+            const expiryMessage = $(this).data('expiry-message');
+            const expiresAt = $(this).data('expires-at');
+            const timeLeft = $(this).data('time-left');
+            
+            $('#editCodeForm').attr('action', "{{ route('admin.cardServiceCode.update', '') }}/" + id);
+            $('#edit_passcode').val(passcode);
+            $('#edit_duration_id').val(durationId);
+            $('#edit_expiry_message').val(expiryMessage || '');
+            $('#edit_modify_days').val('0');
+            $('#edit_modify_hours').val('0');
+            $('#time_action_add').prop('checked', true);
+            
+            // Show current expiry info if code is activated
+            if (expiresAt) {
+                $('#current_expiry_date').text(expiresAt);
+                $('#current_time_left').text(timeLeft || 'N/A');
+                $('#current_expiry_info').removeClass('d-none');
+                $('#time_control_section').removeClass('d-none');
+            } else {
+                $('#current_expiry_info').addClass('d-none');
+                $('#time_control_section').addClass('d-none');
+            }
+        });
+
+        // Handle time action radio buttons
+        $(document).on('change', 'input[name="time_action"]', function() {
+            const action = $(this).val();
+            
+            if (action === 'set') {
+                $('#time_modify_inputs').addClass('d-none');
+                $('#exact_date_input').removeClass('d-none');
+            } else {
+                $('#time_modify_inputs').removeClass('d-none');
+                $('#exact_date_input').addClass('d-none');
+                
+                if (action === 'add') {
+                    $('#time_action_hint').text('{{ trans("Add extra time to the current expiration") }}');
+                } else if (action === 'subtract') {
+                    $('#time_action_hint').text('{{ trans("Reduce time from the current expiration") }}');
+                }
+            }
+        });
+
+        $(document).on('click', '.delete-code-btn', function () {
+            const route = $(this).data('route');
+            $('#deleteCodeLink').attr('href', route);
+        });
+
         function copyFunction(element) {
             var copyText = document.getElementById(element);
             copyText.select();
@@ -408,19 +519,26 @@
             HSCore.components.HSTomSelect.init('.js-select', {
                 maxOptions: 250,
             })
+            @if($selectedDuration)
+            console.log('Filtering by duration:', {{ $selectedDuration }});
+            @endif
+            
             HSCore.components.HSDatatables.init($('#datatable'), {
 
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route("admin.cardServiceCode.search").'?service_id='.$service->id }}",
+                    url: "{{ route("admin.cardServiceCode.search").'?service_id='.$service->id . ($selectedDuration ? '&duration_id='.$selectedDuration : '') }}",
                 },
 
                 columns: [
                     {data: 'checkbox', name: 'checkbox'},
                     {data: 'passcode', name: 'passcode'},
+                    {data: 'duration', name: 'duration'},
                     {data: 'status', name: 'status'},
+                    {data: 'time_left', name: 'time_left'},
                     {data: 'created_at', name: 'created_at'},
+                    {data: 'action', name: 'action'},
                 ],
                 select: {
                     style: 'multi',
@@ -445,10 +563,24 @@
                 let name = $('#name_filter_input').val();
                 let filterStatus = $('#filter_status').val();
                 let filterDate = $('#filter_date_range').val();
+                let filterDuration = $('#filter_duration').val();
 
                 const datatable = HSCore.components.HSDatatables.getItem(0);
-                datatable.ajax.url("{{ route("admin.cardServiceCode.search").'?service_id='.$service->id }}" + "&name=" + name +
-                    "&filterDate=" + filterDate + "&filterStatus=" + filterStatus).load();
+                datatable.ajax.url("{{ route("admin.cardServiceCode.search").'?service_id='.$service->id }}" + 
+                    "&name=" + name +
+                    "&filterDate=" + filterDate + 
+                    "&filterStatus=" + filterStatus +
+                    "&duration_id=" + filterDuration).load();
+            });
+
+            document.getElementById("clear_filter").addEventListener("click", function () {
+                $('#name_filter_input').val('');
+                $('#filter_status').val('all');
+                $('#filter_date_range').val('');
+                $('#filter_duration').val('');
+                
+                const datatable = HSCore.components.HSDatatables.getItem(0);
+                datatable.ajax.url("{{ route("admin.cardServiceCode.search").'?service_id='.$service->id }}").load();
             });
 
             $.fn.dataTable.ext.errMode = 'throw';
