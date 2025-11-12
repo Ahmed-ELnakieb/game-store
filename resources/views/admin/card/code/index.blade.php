@@ -120,35 +120,6 @@
                         </div>
                     </div>
                 </div>
-                
-                @if($durations->isNotEmpty())
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h4 class="card-header-title">@lang('Filter by Duration')</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <a class="list-group-item-action {{!$selectedDuration ? 'border-primary fw-bold' : ''}}"
-                                   href="{{route('admin.cardServiceCode.list') . '?service_id=' . $service->id}}">
-                                    <i class="bi-collection me-2"></i> @lang('All Durations')
-                                </a>
-                            </li>
-                            @foreach($durations as $pricing)
-                                <li class="list-group-item">
-                                    <a class="list-group-item-action {{$selectedDuration == $pricing->duration_id ? 'border-primary fw-bold' : ''}}"
-                                       href="{{route('admin.cardServiceCode.list') . '?service_id=' . $service->id . '&duration_id=' . $pricing->duration_id}}">
-                                        <i class="bi-clock me-2"></i> {{$pricing->duration->name}}
-                                        <span class="badge bg-soft-info text-info float-end">
-                                            {{ basicControl()->currency_symbol }}{{formatAmount($pricing->price)}}
-                                        </span>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-                @endif
             </div>
 
             <div class="col-lg-8">
