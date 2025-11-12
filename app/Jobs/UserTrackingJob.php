@@ -40,13 +40,13 @@ class UserTrackingJob implements ShouldQueue
 
         $userTracking->user_id = $this->userId;
         $userTracking->ip = $this->ip;
-        $userTracking->country_name = $currentUser->countryName;
-        $userTracking->country_code = $currentUser->countryCode;
-        $userTracking->region_name = $currentUser->regionName;
-        $userTracking->city_name = $currentUser->cityName;
-        $userTracking->latitude = $currentUser->latitude;
-        $userTracking->longitude = $currentUser->longitude;
-        $userTracking->timezone = $currentUser->timezone;
+        $userTracking->country_name = $currentUser->countryName ?? 'Unknown';
+        $userTracking->country_code = $currentUser->countryCode ?? 'XX';
+        $userTracking->region_name = $currentUser->regionName ?? 'Unknown';
+        $userTracking->city_name = $currentUser->cityName ?? 'Unknown';
+        $userTracking->latitude = $currentUser->latitude ?? '0';
+        $userTracking->longitude = $currentUser->longitude ?? '0';
+        $userTracking->timezone = $currentUser->timezone ?? 'UTC';
         $userTracking->device = UserSystemInfo::get_device();
         $userTracking->remark = $this->remark;
 

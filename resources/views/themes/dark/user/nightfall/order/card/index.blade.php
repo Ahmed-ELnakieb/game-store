@@ -1,19 +1,19 @@
 @extends(template().'layouts.user')
-@section('title',trans('Card Orders'))
+@section('title',trans('Hacks Orders'))
 @section('content')
     <div class="pagetitle">
-        <h3 class="mb-1">@lang('Card Orders')</h3>
+        <h3 class="mb-1">@lang('Hacks Orders')</h3>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('user.dashboard') }}">@lang('Home')</a></li>
-                <li class="breadcrumb-item active">@lang('Card Orders')</li>
+                <li class="breadcrumb-item active">@lang('Hacks Orders')</li>
             </ol>
         </nav>
     </div>
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between">
-                <h4>@lang('Card Orders')</h4>
+                <h4>@lang('Hacks Orders')</h4>
                 <div class="order-search-form">
                     <form action="{{route('user.cardOrder')}}" method="GET">
                         <input type="hidden" name="type" value="all">
@@ -118,7 +118,7 @@
                     <div class="row g-3">
                         <div class="col-12">
                             <p id="message"></p>
-                            <label class="form-label mt-3"> @lang('Pass Codes')</label>
+                            <label class="form-label mt-3"> @lang('Hack Keys')</label>
                             <div class="showPassCode">
 
                             </div>

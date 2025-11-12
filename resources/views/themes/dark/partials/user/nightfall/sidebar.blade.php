@@ -14,18 +14,26 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link {{menuActive('cards')}}" href="{{route('cards')}}">
+                <i class="fa-regular fa-shopping-cart"></i>
+                <span>@lang('Buy Hacks')</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link {{menuActive('user.add.fund')}}" href="{{route('user.add.fund')}}">
                 <i class="fa-regular fa-wallet"></i>
                 <span>@lang('Add Fund')</span>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- Payout disabled for now --}}
+        {{-- <li class="nav-item">
             <a class="nav-link {{ menuActive('user.payout') }}" href="{{ route('user.payout') }}">
                 <i class="fa-regular fa-money-bill"></i>
                 <span>@lang('Payout')</span>
             </a>
-        </li>
-        @if(basicControl()->top_up)
+        </li> --}}
+        {{-- Top Up Order disabled for now --}}
+        {{-- @if(basicControl()->top_up)
             <li class="nav-item">
                 <a class="nav-link collapsed {{menuActive('user.topUpOrder')}}" data-bs-target="#account-settings"
                    data-bs-toggle="collapse" href="#">
@@ -59,13 +67,13 @@
                     </li>
                 </ul>
             </li>
-        @endif
+        @endif --}}
 
         @if(basicControl()->card)
             <li class="nav-item">
                 <a class="nav-link collapsed {{menuActive('user.cardOrder')}}" data-bs-target="#crm"
                    data-bs-toggle="collapse" href="#">
-                    <i class="fa-sharp fa-regular fa-gift-card"></i><span>@lang('Card Order')</span>
+                    <i class="fa-sharp fa-regular fa-gift-card"></i><span>@lang('Hacks Order')</span>
                     <i class="fa-regular fa-angle-down ms-auto bi-chevron-down"></i>
                 </a>
                 <ul id="crm" class="nav-content collapse {{menuActive('user.cardOrder',2)}}"
@@ -98,7 +106,8 @@
                 </ul>
             </li>
         @endif
-        @if (basicControl()->sell_post)
+        {{-- Sell Post disabled for now --}}
+        {{-- @if (basicControl()->sell_post)
             <li class="nav-item">
                 <a class="nav-link collapsed {{menuActive(['user.sellCreate', 'user.sellList', 'user.sellPostOfferMore','user.sellPostOrder'])}}" data-bs-target="#post"
                    data-bs-toggle="collapse" href="#">
@@ -134,7 +143,7 @@
                     </li>
                 </ul>
             </li>
-        @endif
+        @endif --}}
 
         <li class="nav-item">
             <a class="nav-link {{menuActive('user.fund.index')}}" href="{{route('user.fund.index')}}">
@@ -142,12 +151,13 @@
                 <span>@lang('Payment Logs')</span>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- Payout Logs disabled for now --}}
+        {{-- <li class="nav-item">
             <a class="nav-link {{ menuActive(['user.payout.index']) }}" href="{{ route('user.payout.index') }}">
                 <i class="fa-regular fa-money-bills-simple"></i>
                 <span>@lang('Payout Logs')</span>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a class="nav-link {{menuActive('user.transaction')}}" href="{{route('user.transaction')}}">
                 <i class="fa-regular fa-arrow-right-arrow-left"></i>

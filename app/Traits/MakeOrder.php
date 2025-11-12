@@ -133,10 +133,95 @@ trait MakeOrder
         $this->notifyToAll($deposit);
 
         if ($order->order_for == 'card') {
-            dispatch(new CodeSendBuyer($order));
+            $basicControl = basicControl();
+            
+            // Check if we should use queue or execute directly
+            if ($basicControl->use_queue_for_orders) {
+                // Use queue (async)
+                dispatch(new CodeSendBuyer($order));
+            } else {
+                // Execute directly (sync)
+                $this->processOrderDirectly($order);
+            }
         }
 
         UserTrackingJob::dispatch($order->user_id, request()->ip(), $this->getRemark($order));
+    }
+
+    protected function processOrderDirectly($order): void
+    {
+        $basicControl = basicControl();
+        
+        // Check if auto-complete is enabled
+        if (!$basicControl->auto_complete_orders) {
+            // If disabled, just mark order as pending (status = 0)
+            $order->status = 0;
+            $order->save();
+            return;
+        }
+        
+        // Auto-complete is enabled, assign codes immediately
+        try {
+            \DB::beginTransaction();
+            
+            $orderStatus = 1;
+            foreach ($order->orderDetails as $detail) {
+                $service = $detail->detailable;
+                if (!$service) {
+                    continue;
+                }
+
+                // Get available codes for this service and duration
+                $codeLists = \App\Models\Code::where('codeable_type', \App\Models\CardService::class)
+                    ->where('codeable_id', $service->id)
+                    ->where('duration_id', $detail->duration_id)
+                    ->where('status', 1)
+                    ->take($detail->qty)
+                    ->get();
+                    
+                $sendCodeList = $codeLists->pluck('passcode');
+                $stock_short = max(0, $detail->qty - count($sendCodeList));
+
+                $detail->card_codes = json_encode($sendCodeList->toArray());
+                $detail->stock_short = $stock_short;
+                $detail->status = ($stock_short == 0) ? 1 : 3;
+                $detail->save();
+
+                if ($stock_short) {
+                    $orderStatus = 3;
+                }
+
+                // Mark codes as sold and assign to user with expiration
+                foreach ($codeLists as $code) {
+                    $code->status = 0; // Mark as sold
+                    $code->user_id = $order->user_id;
+                    $code->activated_at = now();
+                    
+                    // Set expiration based on duration
+                    if ($code->duration) {
+                        $code->expires_at = now()->addDays($code->duration->days);
+                    }
+                    
+                    $code->save();
+                }
+
+                // Update sell count
+                $card = $service->card()->select(['id', 'sell_count'])->first();
+                if ($card) {
+                    $card->sell_count += 1;
+                    $card->save();
+                }
+            }
+
+            $order->status = $orderStatus;
+            $order->save();
+            
+            \DB::commit();
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            // Log error but don't fail the payment
+            \Log::error('Order auto-complete failed: ' . $e->getMessage());
+        }
     }
 
     public function increaseCampaignSell($order): void

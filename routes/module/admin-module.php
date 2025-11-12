@@ -169,6 +169,14 @@ Route::group(['prefix' => $adminPrefix, 'as' => 'admin.'], function () {
                     Route::get('delete/{id}', 'delete')->name('delete');
                 });
             });
+
+            Route::controller(\App\Http\Controllers\Admin\Module\OrderSettingsController::class)->group(function () {
+                Route::group(['prefix' => 'order/settings', 'as' => 'orderSettings.'], function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::post('update', 'updateSettings')->name('update');
+                    Route::post('delete-all', 'deleteAllOrders')->name('deleteAll');
+                });
+            });
         });
 
         Route::middleware(['permission:All Marketing'])->group(function () {

@@ -166,6 +166,10 @@
                                    href="{{ route('admin.orderCard.list').'?type=complete' }}">@lang("Complete Orders")</a>
                                 <a class="nav-link {{(request()->routeIs('admin.orderCard.list') && @request()->type == 'refund') ? 'active':''}}"
                                    href="{{ route('admin.orderCard.list').'?type=refund' }}">@lang("Refund Orders")</a>
+                                <a class="nav-link {{request()->routeIs('admin.orderSettings.index') ? 'active':''}}"
+                                   href="{{ route('admin.orderSettings.index') }}">
+                                    <i class="bi-gear me-2"></i>@lang("Order Settings")
+                                </a>
                             </div>
                         </div>
                     @endif

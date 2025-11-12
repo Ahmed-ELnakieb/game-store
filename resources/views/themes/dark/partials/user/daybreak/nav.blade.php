@@ -9,16 +9,22 @@
             <i class="fa-regular fa-grid-2"></i>
         </a>
     </li>
-    @if(basicControl()->top_up)
+    <li class="nav-item">
+        <a class="nav-link {{ menuActive(['cards']) }}" href="{{ route('cards') }}" data-bs-toggle="tooltip" title="Buy Hacks">
+            <i class="fa-regular fa-shopping-cart"></i>
+        </a>
+    </li>
+    {{-- Top Up Order disabled for now --}}
+    {{-- @if(basicControl()->top_up)
         <li class="nav-item">
             <a class="nav-link {{ menuActive(['user.topUpOrder']) }}" href="{{ route('user.topUpOrder'). '?type=all' }}" data-bs-toggle="tooltip" title="Top Up Order">
                 <i class="fa-regular fa-bag-shopping"></i>
             </a>
         </li>
-    @endif
+    @endif --}}
     @if(basicControl()->card)
         <li class="nav-item">
-            <a class="nav-link {{ menuActive(['user.cardOrder']) }}" href="{{ route('user.cardOrder'). '?type=all' }}" data-bs-toggle="tooltip" title="Card Order">
+            <a class="nav-link {{ menuActive(['user.cardOrder']) }}" href="{{ route('user.cardOrder'). '?type=all' }}" data-bs-toggle="tooltip" title="Hacks Order">
                 <i class="fa-regular fa-credit-card"></i>
             </a>
         </li>
@@ -33,7 +39,8 @@
                 <li>
                     <a class="dropdown-item {{ menuActive(['user.add.fund']) }}" href="{{ route('user.add.fund') }}" data-bs-toggle="tooltip" title="Add Fund">@lang('Add Fund')</a>
                 </li>
-                <li class="sub-dropdown">
+                {{-- Payout disabled for now --}}
+                {{-- <li class="sub-dropdown">
                     <a href="#0" class="dropdown-item  {{ menuActive(['user.payout', 'user.payout.index']) }}" title="Manage Payout">
                         @lang('Manage Payout')<i class="fa-regular fa-chevron-right"></i>
                     </a>
@@ -45,7 +52,7 @@
                             <a class="dropdown-item {{ menuActive(['user.payout.index']) }}" href="{{ route('user.payout.index') }}" data-bs-toggle="tooltip" title="Payout Log">@lang('Payout Logs')</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 <li>
                     <a class="dropdown-item {{ menuActive('user.fund.index') }}" href="{{ route('user.fund.index') }}" data-bs-toggle="tooltip" title="Payment Log">@lang('Payment Logs')</a>
                 </li>
@@ -53,7 +60,8 @@
                     <a class="dropdown-item {{ menuActive(['user.transaction']) }}" href="{{ route('user.transaction') }}" data-bs-toggle="tooltip" title="Transactions">@lang('Transactions')</a>
                 </li>
 
-                @if (basicControl()->sell_post)
+                {{-- Sell Post disabled for now --}}
+                {{-- @if (basicControl()->sell_post)
                     <li class="sub-dropdown">
                         <a href="#0" class="dropdown-item {{ menuActive(['user.sellCreate', 'user.sellList', 'user.sellPostOfferMore']) }}" title="Manage Post">
                             @lang('Manage Post') <i class="fa-regular fa-chevron-right"></i>
@@ -73,7 +81,7 @@
                             </li>
                         </ul>
                     </li>
-                @endif
+                @endif --}}
                 <li>
                     <a class="dropdown-item {{ menuActive(['user.ticket.list','user.ticket.create','user.ticket.view']) }}" href="{{ route('user.ticket.list') }}" data-bs-toggle="tooltip" title="Support Ticket">@lang('Support Ticket')</a>
                 </li>
