@@ -339,6 +339,26 @@
             </div>
         </div>
     </div>
+
+    <!-- Delete Order Modal -->
+    <div class="modal fade" id="deleteOrderModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@lang('Delete Order')</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>@lang('Are you sure you want to delete this order? This action cannot be undone.')</p>
+                    <p class="text-warning"><i class="bi-exclamation-triangle me-1"></i> @lang('If the order is completed, the codes will be released back to inventory.')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-bs-dismiss="modal">@lang('Cancel')</button>
+                    <a href="#" id="deleteOrderLink" class="btn btn-danger">@lang('Delete')</a>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
@@ -359,6 +379,12 @@
     <script>
         'use strict';
         var currency = "{{basicControl()->currency_symbol}}";
+        
+        $(document).on('click', '.delete-order-btn', function () {
+            const route = $(this).data('route');
+            $('#deleteOrderLink').attr('href', route);
+        });
+        
         $(document).on("click", ".seeAll", function () {
             let details = $(this).data('detail');
             $('#showAll').html('');

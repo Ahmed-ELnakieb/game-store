@@ -178,29 +178,49 @@ class CardOrderController extends Controller
                 $complete = route('admin.orderCard.complete');
                 $cancel = route('admin.orderCard.cancel');
                 $view = route('admin.orderCard.view') . '?orderId=' . $item->utr;
-                $html = '<div class="btn-group" role="group">
-                      <a href="' . $view . '" class="btn btn-white btn-sm">
-                        <i class="fal fa-eye me-1"></i> ' . trans("View") . '
-                      </a>';
-
-                if ($item->status == 3) {
-                    $html .= '<div class="btn-group">
-                      <button type="button" class="btn btn-white btn-icon btn-sm dropdown-toggle dropdown-toggle-empty" id="userEditDropdown" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                      <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="userEditDropdown">
-                        <a class="dropdown-item actionBtn" href="javascript:void(0)" data-bs-target="#orderStep"
-                           data-bs-toggle="modal" data-type="complete" data-id="' . $item->utr . '" data-route="' . $complete . '">
-                          <i class="fal fa-check dropdown-item-icon"></i> ' . trans("Complete Order") . '
-                       </a>
-
-                       <a class="dropdown-item actionBtn" href="javascript:void(0)" data-bs-target="#orderStep"
-                           data-bs-toggle="modal" data-type="cancel" data-id="' . $item->utr . '" data-route="' . $cancel . '">
-                          <i class="fal fa-times dropdown-item-icon"></i> ' . trans("Cancel Order") . '
-                       </a>
-                      </div>
-                    </div>';
+                $delete = route('admin.orderCard.delete', $item->id);
+                
+                $html = '<div class="btn-group" role="group">';
+                
+                // View button
+                $html .= '<a href="' . $view . '" class="btn btn-white btn-sm">
+                    <i class="bi-eye me-1"></i> ' . trans("View") . '
+                </a>';
+                
+                // Dropdown for more actions
+                $html .= '<div class="btn-group">
+                    <button type="button" class="btn btn-white btn-icon btn-sm dropdown-toggle dropdown-toggle-empty" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                    <div class="dropdown-menu dropdown-menu-end mt-1">';
+                
+                // Quick Complete button (only for pending orders)
+                if ($item->status == 0 || $item->status == 3) {
+                    $html .= '<a class="dropdown-item actionBtn" href="javascript:void(0)" data-bs-target="#orderStep"
+                       data-bs-toggle="modal" data-type="complete" data-id="' . $item->utr . '" data-route="' . $complete . '">
+                      <i class="bi-check-circle dropdown-item-icon text-success"></i> ' . trans("Complete Order") . '
+                   </a>';
                 }
-
-                $html .= '</div>';
+                
+                // Edit button
+                $html .= '<a class="dropdown-item" href="' . $view . '">
+                    <i class="bi-pencil dropdown-item-icon"></i> ' . trans("Edit") . '
+                </a>';
+                
+                // Cancel/Refund button (only for pending/complete orders)
+                if ($item->status == 0 || $item->status == 1 || $item->status == 3) {
+                    $html .= '<a class="dropdown-item actionBtn" href="javascript:void(0)" data-bs-target="#orderStep"
+                       data-bs-toggle="modal" data-type="cancel" data-id="' . $item->utr . '" data-route="' . $cancel . '">
+                      <i class="bi-x-circle dropdown-item-icon text-warning"></i> ' . trans("Cancel Order") . '
+                   </a>';
+                }
+                
+                // Delete button
+                $html .= '<a class="dropdown-item delete-order-btn" href="javascript:void(0)" data-bs-target="#deleteOrderModal"
+                   data-bs-toggle="modal" data-route="' . $delete . '">
+                  <i class="bi-trash dropdown-item-icon text-danger"></i> ' . trans("Delete") . '
+               </a>';
+                
+                $html .= '</div></div></div>';
+                
                 return $html;
             })
             ->rawColumns(['order', 'date','card', 'total_amount', 'payment_method', 'user', 'status', 'action'])
@@ -376,6 +396,39 @@ class CardOrderController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
+    }
 
+    public function delete($id)
+    {
+        try {
+            $order = Order::with('orderDetails')->findOrFail($id);
+            
+            // If order is completed, release the codes back to inventory
+            if ($order->status == 1) {
+                foreach ($order->orderDetails as $detail) {
+                    if ($detail->card_codes) {
+                        $codes = json_decode($detail->card_codes, true);
+                        if ($codes) {
+                            \App\Models\Code::whereIn('passcode', $codes)->update([
+                                'status' => 1,
+                                'user_id' => null,
+                                'activated_at' => null,
+                                'expires_at' => null
+                            ]);
+                        }
+                    }
+                }
+            }
+            
+            // Delete order details first
+            $order->orderDetails()->delete();
+            
+            // Delete order
+            $order->delete();
+            
+            return back()->with('success', 'Order deleted successfully');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 }

@@ -166,6 +166,7 @@ Route::group(['prefix' => $adminPrefix, 'as' => 'admin.'], function () {
                     Route::post('code-send', 'codeSend')->name('codeSend');
                     Route::post('complete', 'complete')->name('complete');
                     Route::post('cancel', 'cancel')->name('cancel');
+                    Route::get('delete/{id}', 'delete')->name('delete');
                 });
             });
         });
