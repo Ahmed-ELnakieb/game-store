@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             ContentDetailSeeder::class,
             PageDetailSeeder::class,
             ServiceDurationSeeder::class,
+            UserSeeder::class, // Test user for purchase testing
             CardSeeder::class, // Game cards (HOK, MLBB, PUBG, etc.)
             CardServiceSeeder::class, // Hacks for each game
             ServicePricingSeeder::class, // Pricing for all hacks

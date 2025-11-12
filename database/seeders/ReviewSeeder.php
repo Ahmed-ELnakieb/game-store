@@ -19,13 +19,12 @@ class ReviewSeeder extends Seeder
         DB::table('reviews')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // Get all users (we'll need at least one user for reviews)
+        // Get all users (should be created by UserSeeder)
         $users = User::all();
         
         if ($users->isEmpty()) {
-            echo "⚠️  No users found. Creating demo users first...\n";
-            $this->createDemoUsers();
-            $users = User::all();
+            echo "⚠️  No users found. Please run UserSeeder first.\n";
+            return;
         }
 
         // Get all cards
