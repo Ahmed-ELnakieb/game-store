@@ -19,9 +19,12 @@
                         <span class="badge bg-soft-success text-success ms-sm-3">
                             <span class="legend-indicator bg-success"></span>@lang('Paid')
                         </span>
-                        @if($order->status == 3)
+                        @if($order->status == 0)
                             <span class="badge bg-soft-warning text-warning ms-2 ms-sm-3">
-                              <span class="legend-indicator bg-warning"></span>@lang('Pending (stock-short)')</span>
+                              <span class="legend-indicator bg-warning"></span>@lang('Pending')</span>
+                        @elseif($order->status == 3)
+                            <span class="badge bg-soft-danger text-danger ms-2 ms-sm-3">
+                              <span class="legend-indicator bg-danger"></span>@lang('Stock Short')</span>
                         @elseif($order->status == 1)
                             <span class="badge bg-soft-success text-success ms-2 ms-sm-3">
                               <span class="legend-indicator bg-success"></span>@lang('Complete')</span>
@@ -36,7 +39,7 @@
 
                     <div class="mt-2">
                         <div class="d-flex gap-2">
-                            @if($order->status == 3)
+                            @if($order->status == 0 || $order->status == 3)
                                 <div class="dropdown">
                                     <a class="text-body" href="javascript:;" id="moreOptionsDropdown"
                                        data-bs-toggle="dropdown" aria-expanded="false">
@@ -46,14 +49,14 @@
                                     <div class="dropdown-menu mt-1" aria-labelledby="moreOptionsDropdown">
                                         <a class="dropdown-item actionBtn" data-type="complete"
                                            data-id="{{$order->utr}}"
-                                           data-route="{{route('admin.orderTopUp.complete')}}"
+                                           data-route="{{route('admin.orderCard.complete')}}"
                                            data-bs-target="#orderStep"
                                            data-bs-toggle="modal"
                                            href="javascript:void(0)">
                                             <i class="bi-check dropdown-item-icon"></i> @lang('Complete order')
                                         </a>
                                         <a class="dropdown-item actionBtn" data-type="cancel" data-id="{{$order->utr}}"
-                                           data-route="{{route('admin.orderTopUp.cancel')}}"
+                                           data-route="{{route('admin.orderCard.cancel')}}"
                                            data-bs-target="#orderStep"
                                            data-bs-toggle="modal"
                                            href="javascript:void(0)">

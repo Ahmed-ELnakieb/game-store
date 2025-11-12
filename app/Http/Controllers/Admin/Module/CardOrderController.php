@@ -19,7 +19,7 @@ class CardOrderController extends Controller
     {
         $status = -1;
         if ($request->type == 'pending') {
-            $status = 3;
+            $status = 0;
         } elseif ($request->type == 'complete') {
             $status = 1;
         } elseif ($request->type == 'refund') {
@@ -156,11 +156,14 @@ class CardOrderController extends Controller
 
             })
             ->addColumn('status', function ($item) {
-                if ($item->status == 3) {
+                if ($item->status == 0) {
                     return '<span class="badge bg-soft-warning text-warning">
-                    <span class="legend-indicator bg-warning"></span>' . trans('Pending (stock-short)') . '
+                    <span class="legend-indicator bg-warning"></span>' . trans('Pending') . '
                   </span>';
-
+                } elseif ($item->status == 3) {
+                    return '<span class="badge bg-soft-danger text-danger">
+                    <span class="legend-indicator bg-danger"></span>' . trans('Stock Short') . '
+                  </span>';
                 } elseif ($item->status == 1) {
                     return '<span class="badge bg-soft-success text-success">
                     <span class="legend-indicator bg-success"></span>' . trans('Complete') . '
@@ -216,19 +219,54 @@ class CardOrderController extends Controller
 
     public function complete(Request $request)
     {
-        $order = Order::with(['orderDetails:id,order_id,status,name', 'user'])->payment()->type('card')
-            ->where('status', 3)->where('utr', $request->orderId)->firstOrFail();
+        $order = Order::with(['orderDetails.detailable', 'user'])->payment()->type('card')
+            ->whereIn('status', [0, 3])->where('utr', $request->orderId)->firstOrFail();
 
         try {
-            $order->status = 1;
-            $order->save();
-
+            \DB::beginTransaction();
+            
+            // Assign codes to each order detail
             if (!empty($order->orderDetails)) {
                 foreach ($order->orderDetails as $detail) {
+                    // Get available codes for this service and duration
+                    $codes = \App\Models\Code::where('codeable_type', \App\Models\CardService::class)
+                        ->where('codeable_id', $detail->detailable_id)
+                        ->where('duration_id', $detail->duration_id)
+                        ->where('status', 1) // Available codes
+                        ->limit($detail->qty)
+                        ->get();
+                    
+                    if ($codes->count() < $detail->qty) {
+                        throw new \Exception('Not enough codes available for ' . $detail->name);
+                    }
+                    
+                    $assignedCodes = [];
+                    foreach ($codes as $code) {
+                        // Mark code as sold and assign to user
+                        $code->status = 0;
+                        $code->user_id = $order->user_id;
+                        $code->activated_at = now();
+                        
+                        // Set expiration based on duration
+                        if ($code->duration) {
+                            $code->expires_at = now()->addDays($code->duration->days);
+                        }
+                        
+                        $code->save();
+                        $assignedCodes[] = $code->passcode;
+                    }
+                    
+                    // Save codes to order detail
+                    $detail->card_codes = json_encode($assignedCodes);
                     $detail->status = 1;
                     $detail->save();
                 }
             }
+            
+            $order->status = 1;
+            $order->save();
+            
+            \DB::commit();
 
             $params = [
                 'order_id' => $order->utr,
@@ -243,8 +281,9 @@ class CardOrderController extends Controller
             $this->userPushNotification($order->user, 'CARD_ORDER_COMPLETE', $params, $action);
             $this->userFirebasePushNotification($order->user, 'CARD_ORDER_COMPLETE', $params);
 
-            return back()->with('success', 'Order has been completed');
+            return back()->with('success', 'Order has been completed and codes have been assigned');
         } catch (\Exception $e) {
+            \DB::rollBack();
             return back()->with('error', $e->getMessage());
         }
     }
