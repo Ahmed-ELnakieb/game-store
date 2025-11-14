@@ -43,7 +43,6 @@
         "stevebauman/location": "^7.0",
         "stevebauman/purify": "^6.0",
         "stichoza/google-translate-php": "^5.2",
-        "strilluminate/default": "^1.0",
         "stripe/stripe-php": "^16.2",
         "symfony/http-client": "^6.3",
         "symfony/mailchimp-mailer": "^6.3",
@@ -54,7 +53,6 @@
         "symfony/sendinblue-mailer": "^6.3",
         "twilio/sdk": "^7.7",
         "vonage/client": "^4.0",
-        "xsoap/init": "^1.0",
         "yajra/laravel-datatables": "10.0"
     },
     "require-dev": {

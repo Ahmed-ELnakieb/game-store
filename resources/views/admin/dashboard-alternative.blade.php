@@ -273,9 +273,7 @@
 
                             <div class="col-md-12">
                                 <p class="text-muted"><span class="text-secondary font-weight-bold">@lang('N.B'):</span>
-                                    @lang('If you are unable to set up cron job, Here is a video tutorial for you')
-                                    <a href="https://www.youtube.com/watch?v=wuvTRT2ety0" target="_blank"><i
-                                            class="fab fa-youtube"></i> @lang('Click Here') </a>
+                                    @lang('If you are unable to set up cron job, please contact support for assistance.')
                                 </p>
                             </div>
                         </div>
