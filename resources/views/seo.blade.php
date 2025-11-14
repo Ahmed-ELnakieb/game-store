@@ -5,6 +5,8 @@
 <meta name="theme-color" content="{{ basicControl()->primary_color }}">
 <meta name="author" content="{{basicControl()->site_title}}">
 <meta name="robots" content="{{ isset($pageSeo['meta_robots']) ? $pageSeo['meta_robots'] : 'index,follow' }}">
+<link rel="manifest" href="{{ asset('manifest.json') }}">
+<link rel="apple-touch-icon" href="{{ getFile(basicControl()->favicon_driver, basicControl()->favicon) }}">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ isset(basicControl()->site_title) ? basicControl()->site_title : '' }}">
