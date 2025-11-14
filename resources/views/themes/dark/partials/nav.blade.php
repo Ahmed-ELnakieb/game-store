@@ -22,8 +22,7 @@
             <div class="right-side ">
                 <ul class="social-box">
                     @foreach($socialData['multiple'] as $item)
-                        <li><a href="{{ @$item['media']->my_link }}" aria-label="{{ @$item['name'] }}"><i
-                                    class="{{ @$item['media']->icon }}"></i></a></li>
+                        <li><a href="{{ @$item['media']->my_link }}" aria-label="{{ @$item['name'] }}"><i class="{{ @$item['media']->icon }}"></i></a></li>
                     @endforeach
                 </ul>
                 <a class="lang-currency-btn"
